@@ -100,4 +100,4 @@ flowchart LR
 
 ---
 
-**被連結自（反向連結）：** [實驗索引：每一輪真跑，逐環節攤開](exp-index.md) · [框架：質化引擎（新聞→世界模型→特徵→Alpha工廠）](fw-qual-engine.md) · [知識圖譜：四張圖](graph-knowledge.md) · [給 LLM 評審：請攻擊這些接縫](for-llm-review.md) · [質化結構組成語言（總覽）](lang-qual.md) · [進化的目標設錯了（病灶六）](objective.md) · [量化結構組成語言（總覽）](lang-quant.md) · [首頁：Alpha 進化迴圈研究 Wiki](index.md)
+**被連結自（反向連結）：** [世界信念契約：被更新的是信念，不是世界](world-belief-contract.md) · [實驗索引：每一輪真跑，逐環節攤開](exp-index.md) · [框架：質化引擎（新聞→世界模型→特徵→Alpha工廠）](fw-qual-engine.md) · [演化的目標：一個目標函數量不了三種東西](objective.md) · [知識圖譜：四張圖](graph-knowledge.md) · [給 LLM 評審：請攻擊這些接縫](for-llm-review.md) · [質化結構組成語言（總覽）](lang-qual.md) · [量化結構組成語言（總覽）](lang-quant.md) · [首頁：Alpha 進化迴圈研究 Wiki](index.md)

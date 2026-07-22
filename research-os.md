@@ -47,12 +47,12 @@ flowchart TB
 | ③ 超圖 | 存「多條件共同作用」的高階交互 | [超圖：策略基因超邊與交互超邊](graph-hypergraph.md)（基因超邊＋交互超邊消融紀律） | 基因超邊已落地；交互超邊**只 1 條**（conflicting）；世界側題材超邊 `qual_hyperedge` 159 條 | [超圖：策略基因超邊與交互超邊](graph-hypergraph.md) |
 | ④ 時間 | 把時間從欄位升級為圖的一級結構（四種時間／時態超邊／五時鐘） | [框架：時間層（時態邏輯節點）](fw-temporal.md)（十塊 schema 完整設計） | **幾乎整層未實作**；只有事件錨＋t+1、三時戳、`qual_edge` 時效欄 | [框架：時間層（時態邏輯節點）](fw-temporal.md) |
 | ⑤ 因果 | 事件→影響→傳導的因果邊與機制身份 | [因果層：新聞→事件→供需→公司→財報→預期→價格](causal-layer.md)；mcm `causal_observations`＋MIEE `market_mapping` | `causal_observations` **約 108 筆**（活管線日更、浮動）；機制詞彙兩套僅 **1 條 exact 生效**、3 條待人核 | [因果層：新聞→事件→供需→公司→財報→預期→價格](causal-layer.md) |
-| ⑥ 假說 | 從缺口提出**可反證**的假說，預註冊凍結 | [假說引擎：從「今天有哪些新聞」到「今天最大的未知是什麼」](hypothesis-engine.md)；MIEE 假說機（預註冊凍結＋落准觸發器） | MIEE 有 3,412 筆前瞻預測帳（真跑）；但**策略側**的「下一代測什麼」仍是純碼機制庫枚舉，非真假說引擎 | [假說引擎：從「今天有哪些新聞」到「今天最大的未知是什麼」](hypothesis-engine.md) |
+| ⑥ 假說 | 從缺口提出**可反證**的假說，預註冊凍結 | [假說引擎：今天最值得消除、又辨識得出的決策相關未知是什麼](hypothesis-engine.md)；MIEE 假說機（預註冊凍結＋落准觸發器） | MIEE 有 3,412 筆前瞻預測帳（真跑）；但**策略側**的「下一代測什麼」仍是純碼機制庫枚舉，非真假說引擎 | [假說引擎：今天最值得消除、又辨識得出的決策相關未知是什麼](hypothesis-engine.md) |
 | ⑦ 實驗 | 十道證據閘＋唯一評分器＋三層保留集，判真假 | [方法：證據閘（十道關卡）](method-gates.md)；AARO harness | **全機最成熟一層**：四輪實驗真跑、獨立重算、E2 封頂 | [方法：證據閘（十道關卡）](method-gates.md) |
 | ⑧ Alpha | 把世界狀態寫成可組合的特徵與策略基因 | [框架：特徵代數](fw-feature-algebra.md)＋[方法：策略基因（StrategySpec 九部件）](method-strategy-spec.md) | 特徵代數已上線；策略層 DSL 六算子已落地 | [框架：特徵代數](fw-feature-algebra.md) |
 | ⑨ 組合 | 入選之後怎麼抱到賣（持有管理） | [框架：持有期生命週期](fw-holding-lifecycle.md)（H0–H5＋剩餘 Alpha） | 骨架＋研究問題一真跑（finlab 覆核）；A/B/C/D 完整比較未做 | [框架：持有期生命週期](fw-holding-lifecycle.md) |
-| ⑩ 執行 | 事件錨、t+1、成本滑價、真錢閘 | 框架書執行層；`engine/compile_positions` | 事件錨＋t+1 已實作；**真錢永不自動**（人按 CA 閘） | [研究迴圈：世界→知識→假說→驗證→更新世界模型](research-loop.md) |
-| ⑪ 自我進化 | 讓迴圈自己提案、變異、裁決、回流 | [方法：進化迴圈（圖提案→變異→裁決→回流）](method-evolution-loop.md)；evolution-loop 憲法 | 機件真跑一輪（[實驗 003](exp-003-graph-evolution.md)）；**但目標設錯→只找到動能 beta**（[進化的目標設錯了（病灶六）](objective.md)） | [方法：進化迴圈（圖提案→變異→裁決→回流）](method-evolution-loop.md) |
+| ⑩ 執行 | 事件錨、t+1、成本滑價、真錢閘 | 框架書執行層；`engine/compile_positions` | 事件錨＋t+1 已實作；**真錢永不自動**（人按 CA 閘） | [研究迴圈：世界不被更新，被更新的是信念](research-loop.md) |
+| ⑪ 自我進化 | 讓迴圈自己提案、變異、裁決、回流 | [方法：進化迴圈（圖提案→變異→裁決→回流）](method-evolution-loop.md)；evolution-loop 憲法 | 機件真跑一輪（[實驗 003](exp-003-graph-evolution.md)）；**但目標設錯→只找到動能 beta**（[演化的目標：一個目標函數量不了三種東西](objective.md)） | [方法：進化迴圈（圖提案→變異→裁決→回流）](method-evolution-loop.md) |
 
 ## 二、「擺錯位階」到底錯在哪
 
@@ -97,10 +97,10 @@ flowchart LR
 - **第一半修法（重構敘事與目標）可以現在做；第二半（建置）必須走薄縱切**。把兩半混為一談、直接開工蓋四個空引擎，就是 architecture-first 復發。
 - **11 層本身也在總體 kill criteria 之下**。若薄縱切跑完、A/B 記帳證明某層沒有增量，那一層照樣拆——把它蓋出來不構成保留它的理由（見 [方法論：誠實紀律（拒絕相信自己）](discipline.md) 第十節）。
 
-一句話收束：**11 層是對的地圖，不是對的施工順序。** 現在就把世界模型擺回根、把目標從策略級績效換成世界模型的可反證預測力（[進化的目標設錯了（病灶六）](objective.md)）；然後只挑一條真鏈，把世界→知識→假說→驗證走通一次，再談要不要擴。
+一句話收束：**11 層是對的地圖，不是對的施工順序。** 現在就把世界模型擺回根、把目標從策略級績效換成世界模型的可反證預測力（[演化的目標：一個目標函數量不了三種東西](objective.md)）；然後只挑一條真鏈，把世界→知識→假說→驗證走通一次，再談要不要擴。
 
 延伸：這條迴圈的完整主軸見 [研究迴圈](research-loop.md)；為什麼世界模型該當根、策略級目標為何會壞見 [進化目標](objective.md)；把假說變成可反證一等公民的機制見 [假說引擎](hypothesis-engine.md)；世界模型層與因果層的真實空殼狀態見 [世界模型：世界不是新聞，新聞是世界狀態的 delta](world-model.md) 與 [因果層：新聞→事件→供需→公司→財報→預期→價格](causal-layer.md)；architecture-first 與薄縱切的完整條文見 [誠實紀律](discipline.md)。
 
 ---
 
-**被連結自（反向連結）：** [世界模型：世界不是新聞，新聞是世界狀態的 delta](world-model.md) · [因果層：新聞→事件→供需→公司→財報→預期→價格](causal-layer.md) · [整體架構與資料流](architecture.md) · [知識層：一則新聞展開成一張知識子圖](knowledge-layer.md) · [研究迴圈：世界→知識→假說→驗證→更新世界模型](research-loop.md) · [總覽：真正該演化的不是策略，是世界模型](overview.md) · [進化的目標設錯了（病灶六）](objective.md) · [首頁：Alpha 進化迴圈研究 Wiki](index.md)
+**被連結自（反向連結）：** [世界模型：世界不是新聞，新聞是世界狀態的 delta](world-model.md) · [因果層：新聞→事件→供需→公司→財報→預期→價格](causal-layer.md) · [整體架構與資料流](architecture.md) · [演化的目標：一個目標函數量不了三種東西](objective.md) · [知識層：一則新聞展開成一張知識子圖](knowledge-layer.md) · [研究迴圈：世界不被更新，被更新的是信念](research-loop.md) · [總覽：真正該演化的不是策略，是世界模型](overview.md) · [首頁：Alpha 進化迴圈研究 Wiki](index.md)
