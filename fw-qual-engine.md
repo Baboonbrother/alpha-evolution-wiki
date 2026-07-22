@@ -84,4 +84,4 @@ flowchart LR
 
 ---
 
-**被連結自（反向連結）：** [實驗 000：引擎首輪 A/B 退出時點](exp-000-engine-first-run.md) · [整體架構與資料流](architecture.md) · [方法論：誠實紀律（拒絕相信自己）](discipline.md) · [框架：世界訊號](fw-world-signal.md) · [框架：時間層（時態邏輯節點）](fw-temporal.md) · [知識圖譜：四張圖](graph-knowledge.md) · [給 LLM 評審：請攻擊這些接縫](for-llm-review.md) · [總覽：從一個念頭到一台會拒絕相信自己的引擎](overview.md) · [質化結構組成語言（總覽）](lang-qual.md) · [超圖：策略基因超邊與交互超邊](graph-hypergraph.md) · [首頁：Alpha 進化迴圈研究 Wiki](index.md)
+**被連結自（反向連結）：** [假說引擎：從「今天有哪些新聞」到「今天最大的未知是什麼」](hypothesis-engine.md) · [因果層：新聞→事件→供需→公司→財報→預期→價格](causal-layer.md) · [實驗 000：引擎首輪 A/B 退出時點](exp-000-engine-first-run.md) · [整體架構與資料流](architecture.md) · [方法論：誠實紀律（拒絕相信自己）](discipline.md) · [框架：世界訊號](fw-world-signal.md) · [框架：時間層（時態邏輯節點）](fw-temporal.md) · [知識圖譜：四張圖](graph-knowledge.md) · [知識層：一則新聞展開成一張知識子圖](knowledge-layer.md) · [研究迴圈：世界→知識→假說→驗證→更新世界模型](research-loop.md) · [給 LLM 評審：請攻擊這些接縫](for-llm-review.md) · [總覽：真正該演化的不是策略，是世界模型](overview.md) · [質化結構組成語言（總覽）](lang-qual.md) · [超圖：策略基因超邊與交互超邊](graph-hypergraph.md) · [進化的目標設錯了（病灶六）](objective.md) · [首頁：Alpha 進化迴圈研究 Wiki](index.md)

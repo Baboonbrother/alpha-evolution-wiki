@@ -52,4 +52,4 @@ flowchart TB
 
 ---
 
-**被連結自（反向連結）：** [實驗 003：圖驅動自主進化三代](exp-003-graph-evolution.md) · [方法：進化迴圈（圖提案→變異→裁決→回流）](method-evolution-loop.md) · [詞彙表](glossary.md) · [首頁：Alpha 進化迴圈研究 Wiki](index.md)
+**被連結自（反向連結）：** [實驗 003：圖驅動自主進化三代](exp-003-graph-evolution.md) · [整體架構與資料流](architecture.md) · [方法：進化迴圈（圖提案→變異→裁決→回流）](method-evolution-loop.md) · [研究迴圈：世界→知識→假說→驗證→更新世界模型](research-loop.md) · [詞彙表](glossary.md) · [首頁：Alpha 進化迴圈研究 Wiki](index.md)

@@ -67,4 +67,4 @@ flowchart TD
 
 ---
 
-**被連結自（反向連結）：** [框架：質化引擎（新聞→世界模型→特徵→Alpha工廠）](fw-qual-engine.md) · [給 LLM 評審：請攻擊這些接縫](for-llm-review.md) · [總覽：從一個念頭到一台會拒絕相信自己的引擎](overview.md) · [量化結構組成語言（總覽）](lang-quant.md) · [首頁：Alpha 進化迴圈研究 Wiki](index.md)
+**被連結自（反向連結）：** [框架：質化引擎（新聞→世界模型→特徵→Alpha工廠）](fw-qual-engine.md) · [知識層：一則新聞展開成一張知識子圖](knowledge-layer.md) · [給 LLM 評審：請攻擊這些接縫](for-llm-review.md) · [量化結構組成語言（總覽）](lang-quant.md) · [首頁：Alpha 進化迴圈研究 Wiki](index.md)
