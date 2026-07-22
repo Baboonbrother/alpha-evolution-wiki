@@ -126,4 +126,4 @@ flowchart TB
 
 ---
 
-**被連結自（反向連結）：** [CB 與 CBAS：債底加選擇權的合體，與拆開賣的兩端](cb-cbas.md) · [下單執行與作戰 UI：從訊號到真單的協調機制（全系統零自動送單）](order-execution-ui.md) · [假說引擎：研究問題從冠軍的殘差長出來](hypothesis-engine.md) · [實驗 005：king2 冠軍—挑戰者五臂預註冊（REGISTERED，零臂已跑）](exp-005-king2-prereg.md) · [實驗 006：CB 載具路由四臂預註冊（構想級——判準未凍結、未入帳、零臂已跑）](exp-006-cb-router-prereg.md) · [實驗索引：每一輪真跑，逐環節攤開](exp-index.md) · [研究迴圈：W/O/B/P 分離，主線繞著現任冠軍轉](research-loop.md) · [載具路由器：king2 決定看多誰，路由器決定用什麼報酬形狀表達](instrument-router.md) · [首頁：Alpha 進化迴圈研究 Wiki](index.md)
+**被連結自（反向連結）：** [CB 與 CBAS：債底加選擇權的合體，與拆開賣的兩端](cb-cbas.md) · [下單執行與作戰 UI：從訊號到真單的協調機制（全系統零自動送單）](order-execution-ui.md) · [假說引擎：研究問題從冠軍的殘差長出來](hypothesis-engine.md) · [實驗 005：king2 冠軍—挑戰者五臂預註冊（REGISTERED，零臂已跑）](exp-005-king2-prereg.md) · [實驗 006：CB 載具路由四臂預註冊（構想級——判準未凍結、未入帳、零臂已跑）](exp-006-cb-router-prereg.md) · [實驗 007：king2 殘差第一條世界假說——落選股的產業需求殘差](exp-007-residual-belief.md) · [實驗索引：每一輪真跑，逐環節攤開](exp-index.md) · [研究迴圈：W/O/B/P 分離，主線繞著現任冠軍轉](research-loop.md) · [載具路由器：king2 決定看多誰，路由器決定用什麼報酬形狀表達](instrument-router.md) · [首頁：Alpha 進化迴圈研究 Wiki](index.md)

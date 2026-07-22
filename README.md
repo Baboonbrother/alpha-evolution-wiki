@@ -1,8 +1,8 @@
 # Alpha 進化迴圈研究 Wiki
 
-> 以世界模型為主軸的 Research OS：現任冠軍制度（凍結 king2→殘差→假說→挑戰者→晉升）＋載具路由器（股票/權證/CB/CBAS＝報酬形狀）＋信念契約＋每次實驗（000–006）逐環節透明。
+> 以世界模型為主軸的 Research OS：現任冠軍（凍結 king2）→ 決策殘差 → 世界假說 → 信念契約 → 樣本外對決 → 晉升；載具路由器（股票/CB/CBAS＝報酬形狀）。每次實驗（000–007）逐環節透明。exp-007＝第一條從冠軍殘差長出的世界假說 B-RES-001，裁決 NARROW_SCOPE（誠實：未確認也未否證，C 臂維持 blocked）。
 
-**冠軍制度**：[champion-challenger.md](champion-challenger.md)　·　**載具路由器**：[instrument-router.md](instrument-router.md)　·　**單檔全文**：[alpha-wiki-bundle.md](alpha-wiki-bundle.md)　·　**給 LLM 評審**：[for-llm-review.md](for-llm-review.md)
+**冠軍制度**：[champion-challenger.md](champion-challenger.md)　·　**演化目標**：[objective.md](objective.md)　·　**單檔全文**：[alpha-wiki-bundle.md](alpha-wiki-bundle.md)　·　**給 LLM 評審**：[for-llm-review.md](for-llm-review.md)
 
 績效數字均為未經樣本外驗證的暫定結果，非投資建議。
 
