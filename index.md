@@ -137,10 +137,10 @@ flowchart TB
 > - 編號實驗：**8 個**（000–007，每個都指回帳本證據）
 > - 信念契約：**6 條**＝策展 3＋自主示範 3；從冠軍殘差長出的世界假說 **1 條** → B-RES-001（NARROW_SCOPE，信心 0.445182）
 > - 已 confirmed（REINFORCE 過基準且來自 SEALED 段）：**0 條（C 臂維持 blocked）**
-> - 預註冊凍結：**8 份**（H-DEV2、EXP-005、AUTO-AR-1-C-normal-revH-chipL、AUTO-AR-2-C-normal-revM-chipL、AUTO-AR-3-C-normal-revL-chipL、OPEN-3fe5914572bb10d4、CONFIRM-bb482590fefecfe9、EXP-007）
+> - 預註冊凍結：**10 份**（H-DEV2、EXP-005、AUTO-AR-1-C-normal-revH-chipL、AUTO-AR-2-C-normal-revM-chipL、AUTO-AR-3-C-normal-revL-chipL、OPEN-3fe5914572bb10d4、CONFIRM-bb482590fefecfe9、GRAPH-1ec53b3b9cf89dcf、GRAPH-21af02f1d9fdb6ee、EXP-007）
 > - C 臂狀態：**blocked**（需一條 confirmed 信念才解鎖）
 > - 金庫可授 confirmed 的 SEALED 段：**1 個** → LIVE_FORWARD（SEALED，0 筆，未來事件累積中）
-> - 自主搜尋輪：**6 輪**（無人選題自主 **5 輪**，示範迴圈自轉，結算在 EXPOSED 段故不可 confirmed）
+> - 自主搜尋輪：**8 輪**（無人選題自主 **7 輪**，示範迴圈自轉，結算在 EXPOSED 段故不可 confirmed）
 <!--/STATE-->
 
 環的中段仍未閉合：已有第一條從殘差長出的世界假說（B-RES-001），但它 `NARROW_SCOPE`、未 confirmed，挑戰者 C 臂因此維持 blocked，零對決、零晉升。
