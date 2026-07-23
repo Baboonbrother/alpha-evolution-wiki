@@ -45,6 +45,7 @@ flowchart TB
 | 007 | king2 落選股中，當時所屬產業月營收 YoY 中位（PIT）高者，持有窗殘差顯著為正（產業／世界需求衝擊是個股特質分數的漏項） | 冠軍殘差 [[champion-challenger]] ＋信念契約 [[world-belief-contract]] | **NARROW_SCOPE（E2）** | 第一條真正從冠軍決策殘差長出的世界假說 B-RES-001；HOLDOUT n=25 方向對（命中 0.64、平均超額 +0.715%/事件）但不顯著（t=0.73、CI [−1.19%,+2.60%] 含 0），confidence 0.5→0.445，既未確認也未否證——C 臂維持 blocked，下一閘獨立 walk-forward | [[exp-007-residual-belief]] |
 | 008 | 報酬的橫斷面資訊藏在**世界層**（產業營收狀態的水位/加速度/擴散度/陽明落後機制），非只在個股層 | 世界鏈 [[graph-native]] ＋確認閘機件 ＋搜尋帳 Bonferroni | **全 BLOCKED（誠實負結果）** | 第一次用世界模型找 Alpha：dev 四候選全強顯著（t=5.8~16.5，W_BREADTH 八年年年非負）→ prereg 凍結 → validation 全歸零、零挑戰者——**世界層訊號 regime 相依**（2022 升息後死掉）是本輪買到的真世界知識；W_LAGGARD（陽明機制）橫斷面均值反向＝個案敘事≠均值行為 | [[exp-008-world-alpha]] |
 | 009 | 與台股產業有因果機制的 Polymarket 事件機率變化（Δlogit×可信度），能否解釋 king2 未解釋報酬（**預備：只完成第1步可行性，零報酬統計**） | 資料源偵察器＋ExpectationMarketSource | **預備級（可行性✅）** | E_t[event]≠W_t 定位凍結；三族群 98/51/42 檔市場、191檔100%含裁決規則、已結算市場全程日頻歷史可取（中國侵台2024=352點）；合規=台灣DNS攔截誠實記錄歸owner；三限制=單市場短命要縫接/宏觀市場2024起tier要重設計/歷史spread不可得 | [[exp-009-expectation-layer]] |
+| F01 | 法人變化型特徵是否只是完整 king2 籌碼分數的換皮（**主線改向第一實驗：不追 Sharpe 只清換皮,零前瞻報酬**） | 完整king2節點 [[exp-f01-king2-overlap]] ＋DataContract＋定義圖 | **重疊圖完成** | 完整king2逐字重建並對parquet 2500格對帳0超差;11法人特徵=10候選增量+1部分重疊+0換皮;最大重疊7/11落chip(經濟合理:法人買↔大戶累積,窗越長越近)且零SIZE_PROXY;定義圖11邊入qual_edge——**法人流是king2沒用到的軸**,能否解釋殘差=F02 | [[exp-f01-king2-overlap]] |
 
 ## 怎麼讀這張表
 
