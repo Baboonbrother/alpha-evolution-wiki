@@ -5,7 +5,7 @@ group: 圖與超圖
 
 # 知識圖譜：四張圖，全部是帳的投影
 
-> **【F01.1 狀態更新 2026-07-24】** 定義圖與證據圖已從設計落地為分表實體：`def_edge`（特徵怎麼算——uses_data/applies_transform/normalizes_by，60 邊，源自 FeatureSpec 宣告式規格）與 `evi_edge`（實驗量到什麼——帶 period/universe/metric/run_hash/data_snapshot_id 的 provisional 邊）。首批內容＝法人 11 特徵 × king2 score 分量重疊（見 [[exp-f01-king2-overlap|EXP-F01]]）。本頁下文的「僅設計」敘述屬歷史狀態。
+> **【F01.1 狀態更新 2026-07-24】** 定義圖與證據圖已從設計落地為分表實體：`def_edge`（特徵怎麼算——uses_data/applies_transform/normalizes_by，60 邊，源自 FeatureSpec 宣告式規格）與 `evi_edge`（實驗量到什麼——帶 period/universe/metric/run_hash/data_snapshot_id 的 provisional 邊）。首批內容＝法人 11 特徵 × king2 score 分量重疊（見 [[exp-f01-king2-overlap|EXP-F01]]）。下方狀態表已同步為現況（歷史狀態收進「誠實狀態」段的變更史）。
 
 ## 為什麼需要圖：血統鏈不夠
 
@@ -58,12 +58,12 @@ flowchart TD
 
 | 圖 | 回答的問題 | 節點 | 邊（封閉詞彙） | 投影來源 | 狀態 |
 |---|---|---|---|---|---|
-| **定義圖** | 這個特徵到底怎麼算出來的？ | 資料欄、算子、參數、特徵、輸出型別 | uses_data / applies_transform / takes_parameter / produces / derived_from | 特徵代數 [[fw-feature-algebra]] 的 `to_spec()/tree()` 已含全部資訊，純碼展開 | 設計（視圖待補） |
+| **定義圖** | 這個特徵到底怎麼算出來的？ | 資料欄、算子、參數、特徵、輸出型別 | uses_data / applies_transform / normalizes_by / windowed_over / referenced_in | FeatureSpec 宣告式規格純碼展開（F01.1） | **已落地** `def_edge`（60 邊） |
 | **策略圖** | 策略怎麼把特徵組成持股？ | 池狀態、特徵、算子、組合狀態、持有政策、執行政策 | consumes / transforms_state / ranks_by / selects / allocates / exits_by | StrategySpec [[method-strategy-spec]] 九部件結構，純碼展開 | 設計（視圖待補） |
 | **證據圖** | 這個主張有什麼證據？ | 假說、實驗、指標、結果、反證、證據級 | supports / contradicts / tested_on / valid_under / replicates / supersedes | `experiment_contract × experiment_result ＋ knowledge_event` | **已落地** `v_evidence_graph`（36 邊） |
 | **演化圖** | 誰生了誰、哪種變異在什麼條件有效？ | 策略世代節點 | mutation 邊（帶 parent/child/changed_component/before/after/多維 delta） | `generation_log` 字串血統 ＋ `mutation_edge` 結構化邊 | **已落地** `v_evolution_graph`（9 邊） |
 
-**誠實狀態**（2026-07-22）：`graph_views.py` 目前只建了**證據圖與演化圖兩個視圖**（DDL 是固定字串常數，重推決定性）；**定義圖與策略圖仍是設計，視圖待補**。另有一張「節點帶狀態」視圖 `v_feature_node`（把特徵節點的已測實驗/正負/有效脈絡全部 SQL 現算，永不手填）列在框架書 G-P1，**尚未建成、標待補**——手填的節點狀態一定腐爛，現算的才永遠與帳一致。
+**誠實狀態**（2026-07-24 更新）：定義圖已落地為 `def_edge` 實表（F01.1，60 邊）、證據圖除 `v_evidence_graph` 視圖外新增 `evi_edge` 實表（帶 period/universe/metric/run_hash/data_snapshot_id 的 provisional 邊，F01.1 起）；**策略圖仍是設計**；「節點帶狀態」視圖 `v_feature_node`（SQL 現算永不手填）**尚未建成**。變更史：2026-07-22 時定義圖尚屬設計、graph_views.py 只有證據＋演化兩視圖——該狀態已被本段取代。
 
 ## 三種關係都要存，不是只存正向
 

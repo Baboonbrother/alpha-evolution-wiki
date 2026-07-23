@@ -1,0 +1,370 @@
+{
+ "identity_id": "CHAMPION-IDENTITY-20260724",
+ "conclusion": {
+  "live_automated_champion": "STR_king2_deploy=STR_king2(adv_floor=0.3,top_k=12,harden_gates=True) — king-order.service(5577,log實證『策略=king2_deploy|凍結12檔』)+king-dashboard(7795)同源",
+  "owner_pasted": "STR_king1(s993)=王牌本尊/血統祖先;手動預跑report路徑(_app_live形狀)才會走到 king1 fallback",
+  "aaro_mirror": "king2_deploy 選股層逐字忠實(top-12/地板/三維閘/harden 對上,RK順序無失真);持有層簡化(S_IND/冷卻/skip_holiday/成本不入鏡,MIRROR_DEVIATIONS九條自報經逐條對碼查證屬實)",
+  "seasonal_pos2": "部署碼全死碼(s993/s991算了未用;唯一套用處=finlab_參考/s999範例,不在部署鏈);live王牌全年運作",
+  "variant_mismatch_finding": "⚠ 兩條產單路徑變體分歧:互動下單app(5577)=king2_deploy(top-12+地板+harden);無頭日終線(cron20:00 run_daily_deploy→deploy_today→edge_supervisor.current_holdings)=STR_king2()基礎版(0.93可變檔數,無地板)——名單可能分歧,歸owner拍板哪條為權威",
+  "historical_note": "launch_order.py註解『修king2錯配』+log歷史:下單app曾跑king2基礎版與作戰台不一致,後被pin死king2_deploy——同型病曾在app層發生並被修"
+ },
+ "registered": {
+  "CHAMP-king1-original": "lineage=king1-line(本輪新增,STR_king1逐字sha bb75e2709ab2d10c+17helper hash)",
+  "CHAMP-king2-v1 / CHAMP-king2-freeze": "lineage=king2-line/king2-freeze(既有,真部署)"
+ },
+ "adversarial_note": "初稿claim1(live=king1)被對抗查證反駁並修正;『owner貼文=s993逐字』由主線比對確認(貼文與s993逐字一致含註解),對抗員未見貼文原文誠實標註",
+ "evidence": {
+  "mirror_audit": {
+   "mirror_selection": "score = 0.65×RK(REVYOY) + 0.35×(指紋5分量+籌碼4分量)/2（W=0.35, use_chip 等效 True, fillna(0.5) 中性），四閘 AND：q=(RK(ROE)+RK(營益率)+RK(稅後淨利率))/3>0.3、b2>0.9、b3>0.75、b4>0.6，加流動性地板 RK(20日均成交值)>0.3（ADV_FLOOR=0.3），入選＝gate-passers 依 score 取固定 top-12（TOP_K=12）——即 STR_king2_deploy≡STR_king2(adv_floor=0.3, top_k=12, harden_gates=True) 的選股層；harden clamp min(0.9,0.97)/min(1.005,1.02) 數值上等於 base 值，鏡像直接用 0.9 無差異。RK 順序無失真：鏡像先取錨日列再逐列 rank，RK 是 axis=1 橫斷面（欄＝全市場），與原式先全市場算再取列同值（residuals.py 註明「逐列排名＝原式同值」）；top-12 的 mask-先-rank-後也與 deploy 版 score.where(gate).rank(axis=1) 語意一致。未鏡射 core 版 sel_rank>0.93 可變檔數路徑。",
+   "mirror_holding": "月錨到月錨單段簡化：錨日 d（月營收公告日∩交易日）as-of 取訊號 → t+1 交易日收盤進場 → 下一公告錨前 5 日曆日（PRE_DAYS+1 回推最後持有日）之後首個交易日收盤出清，只取「進場→首次排程出清」第一段。報酬用 etl:adj_close 毛報酬（訊號仍用未還原 price:收盤價，與實盤一致）。逐日 S_IND 領先股狀態機（td2(PCT(C,5)[s1&s2&s3].mean)>1.005）、extend_false_forward(S_IND,5) 熄火後 5 日冷卻、skip_holiday_mask、RP 手續費/滑價全部不入事件窗——這些是 MIRROR_DEVIATIONS #2/#3/#5 自報的有意識取捨（理由：S_IND/skip_holiday 對全部持股同日同值＝橫斷面常數，不影響事件內入選 vs 落選相對比較，只影響絕對報酬水位）。0050<MA50 regime 只當事件描述標籤，非曝險 overlay。",
+   "mismatches_vs_king1": [
+    {
+     "component": "選股分數",
+     "mirror": "複合分 0.65×RK(REVYOY)+0.35×(指紋5分量+籌碼4分量)/2",
+     "real": "純 RK(REVYOY()) 單因子（s993 line 16），無指紋無籌碼"
+    },
+    {
+     "component": "選股檔數規則",
+     "mirror": "gate-passers 依 score 取固定 top-12（決定性 tie-break）",
+     "real": "RK(REVYOY)[b1&b2&b3&b4]>0.93 cutoff，檔數可變（前 7% 浮動）"
+    },
+    {
+     "component": "b1 品質閘",
+     "mirror": "(RK(ROE)+RK(營業利益率)+RK(稅後淨利率))/3 > 0.3 三維複合（deadline 防前視）",
+     "real": "RK(ROE())>0.3 純 ROE 單維（s993 line 7）"
+    },
+    {
+     "component": "流動性地板",
+     "mirror": "RK((收盤價×成交股數).rolling(20).mean())>0.3",
+     "real": "無 adv_floor（b5=RK(MV()).is_largest 市值閘有定義但未進 buy，line 12 vs 16）"
+    },
+    {
+     "component": "持有規則",
+     "mirror": "月錨t+1進場→下一錨前5日曆日排程出清，單段簡化",
+     "real": "逐日 pos＝buy_revcycle_sellforward_skipholiday & mask_intersection(…, extend_false_forward(S_IND,5))：S_IND 領先股狀態機＋熄火5日冷卻＋sellforward 5日＋skip_holiday_mask(100)"
+    },
+    {
+     "component": "執行與成本",
+     "mirror": "adj_close 毛報酬，零手續費零滑價",
+     "real": "RP(pos,None,p_num=1,trade_at='close',sl=1,tp=1)＝finlab sim 含 fee_ratio=1.425/1000/3 與滑價官方口徑"
+    }
+   ],
+   "mismatches_vs_king2": [
+    {
+     "component": "選股檔數規則（vs STR_king2 預設）",
+     "mirror": "固定 top-12＋adv_floor=0.3（＝deploy 變體參數）",
+     "real": "STR_king2 預設 top_k=None＝sel_rank[gate]>0.93 可變檔數、adv_floor=None；鏡像只忠實 deploy 變體（line 171），非 STRATEGIES['king2'] 預設"
+    },
+    {
+     "component": "S_IND 產業擇時＋5日冷卻",
+     "mirror": "完全不入事件窗報酬（deviation #2 自報，理由＝橫斷面常數不影響相對比較）",
+     "real": "S_IND=td2(PCT(C,5)[s1&s2&s3].mean)>1.005，extend_false_forward 5日＝族群熄火全不持有，是 MDD 控制主力（s994 line 102-109）"
+    },
+    {
+     "component": "skip_holiday",
+     "mirror": "無",
+     "real": "skip_holiday_mask(buy_revcycle_sellforward, C(), 100)（實務幾乎不觸發）"
+    },
+    {
+     "component": "成本口徑",
+     "mirror": "adj_close 毛報酬零費用（deviation #3）；t+1 收盤執行時點有鏡射",
+     "real": "RP sim trade_at='close' 含 fee_ratio 1.425/1000/3＋滑價"
+    },
+    {
+     "component": "top-12 tie-break",
+     "mirror": "score 降冪＋代號升冪決定性排序（deviation #4）",
+     "real": "rank(axis=1, ascending=False, method='first')＝依欄位順序；浮點完全同分時可能選到不同檔（極罕見）"
+    },
+    {
+     "component": "非交易日錨月份與再進場",
+     "mirror": "該月不產事件、持有窗只取第一段（deviation #5）",
+     "real": "extend_true_byindex 該月沿用上期名單，sellforward 後錨日後會短暫再進場"
+    },
+    {
+     "component": "重建起點",
+     "mirror": "2014-01-01 起（b1 需財報，finlab_db 自 2013-05-15；deviation #7 不虛構更早）",
+     "real": "全史回測（king2 全史 Sharpe 2.843 口徑含 2014 前）"
+    }
+   ],
+   "mirror_is_faithful_to": "king2_score_only_simplified",
+   "notes": "結論一句話：鏡像忠實重建的是 STR_king2_deploy（s994 line 171：adv_floor=0.3, top_k=12, harden_gates=True）的「選股層」——複合分公式、三維品質閘、b2/b3/b4、流動性地板、top-12 全部逐字對上且 harden clamp 數值等同 base——但持有層簡化為月錨→下一錨前5日單段毛報酬，S_IND 狀態機/5日冷卻/skip_holiday/RP 成本均不入鏡，故選 king2_score_only_simplified 而非 king2；絕非 king1（king1 無複合分、無三維閘、無地板、0.93 可變檔數）。佐證：champion_freeze.py 以 sha256 釘住 s994 等四檔並在 RULE_SPEC 完整凍結含 S_IND/skip_holiday 的全規則文字（凍結文本比執行面完整——RULE_SPEC 有寫 S_IND，residuals.py 執行時不算它）；residuals.py 的 MIRROR_DEVIATIONS 九條自報清單經逐條對碼查證屬實、無隱瞞項。另兩點：①鏡像的 regime_weak 標籤用 0050<MA50（local_regime overlay 口徑），與策略內 S_IND 是不同層的市場狀態，僅作事件描述非鏡射；②task 提的「RK 先全市場再遮罩」在鏡像中無失真（RK 為逐列橫斷面，先取錨日列不改值；top-12 路徑兩邊都是 mask 後才 rank）。真錢線目錄全程唯讀，僅 Read 未寫入。"
+  },
+  "deploy_chain_audit": {
+   "live_order_strategy": "真錢下單 app（port 5577）實際跑的是 king2_deploy＝STR_king2(adv_floor=0.3, top_k=12, harden_gates=True)（全棧硬化＋流動性地板 top70%）。鏈路：systemd user unit king-order.service → dashboard/serve_order.sh → dashboard/launch_order.py 以 launch_app(capital=100000, host='0.0.0.0', port=5577, strategy='king2_deploy') 啟動 → s3_order_app 用 s994_str_enhanced.get_strategy('king2_deploy') → STR_king2_deploy。運行期 log（dashboard/_order_app.log，最後更新 2026-07-24 06:02）逐字印出「策略=king2_deploy」與「錨定鎖：king2_deploy 窗2026-07-13 lock｜凍結 12 檔」，服務 systemctl --user is-active 回 active。程式碼裡的預設值（launch_app 未給 strategy 時退 'king2'、s1_trade.Pipe 未給 strategy 時退 s993 的 STR_king1）都只是 fallback，live 服務已明確 pin 住 king2_deploy 不會走到。另有一條無頭日終線（crontab 20:00 run_daily_deploy.sh → deploy_today.py）產「今日下單清單」，它的持股來自 edge_supervisor.current_holdings()＝STR_king2() 基礎版（無 adv_floor/top_k 硬化）——與互動下單 app 的 king2_deploy 不是同一個變體（詳 notes）。",
+   "dashboard_strategy": "儀表板（port 7795, tailscale /finlab）鏈路：king-dashboard.service → dashboard/serve.sh → dashboard/serve.py（靜態檔＋重算後端），重算呼叫 dashboard/build_data.py，其 argparse 預設 --strategy king2_deploy（「預設只建 king2_deploy」），可選 --all 建 DASH_STRATS 六個變體（king2_deploy/king2/king2_top70/king2_top50/king2_top30/king2_fp）。所以儀表板主顯示與部署策略同源＝king2_deploy，「更新策略」按鈕範例即 POST /api/rebuild?scope=current&strategy=king2_deploy。晨間 06:00 cron morning_refresh.sh 預熱同一套。",
+   "edge_supervisor_role": "edge_supervisor.py＝部署 supervisor 每日健檢，不下單。三職能：① edge 存活監看（beta 調整 alpha rolling-24m 與隔夜報酬佔比 rolling-252d，預註冊 tripwire：alpha<2%/月 WATCH、<0 ALERT；隔夜佔比<80% WATCH、<60% ALERT）；② 今日部署訊號（重用 s994 的 regime×drawdown 決定滿倉/去風險）；③ 今日實際持股清單。輸出 ALIVE/WATCH/ALERT 一頁狀態，--push 才推 Telegram。被兩處消費：run_daily_deploy.sh（cron 20:00）step1 先跑它、step2 的 deploy_today.py import edge_supervisor 取 current_holdings/today_signals/edge_health 產無頭下單清單；s3_order_app.py 內 /api 端點也 import edge_supervisor 供介面查健檢。注意：它監看與取持股用的是 STR_king2()（基礎版），不是下單 app 的 king2_deploy。",
+   "seasonal_pos2_used_anywhere": "沒有。pos2 = mask_date_range(pos,\"09-25\",\"11-10\") 這個季節窗在整個 finlab_usage_guide 是死碼，從未餵給 RP/下單/監控。逐一確認：(1) s993_str_for_import.py:43 在 STR_king1 內算了 pos2，但緊接著 line 46-47 return_pos 時回傳 pos、line 49 回測用 RP(pos,...)，pos2 算完即丟；而且 live 鏈根本不用 STR_king1（只是 Pipe 的 fallback 預設）。(2) s991_find_strong.py:94 同樣算了 pos2，line 97 report2 = RP(pos,...) 用的仍是 pos；該檔後面 line 292/303/319/497 的 pos2 是 extend_signal(...) 重新賦值，與季節窗無關；且 s991 沒被任何部署檔 import（grep 無結果）。(3) 唯一真的把該遮罩套用到最終持倉的是 finlab_參考/s999_llm回測.py:191/204/325（pos_user_original/final_pos/DateSkip），但那是 finlab_參考/ 目錄下的 LLM 回測參考範例，grep 全目錄無任何檔 import s999，不在部署鏈上。(4) experiments/ 與 gen5 系列的 pos2/pos200/pos250 是不同變數（extend_signal、位階 rank），與 09-25→11-10 季節窗無關。live 策略 STR_king2/STR_king2_deploy（s994_str_enhanced.py）全檔無 mask_date_range。",
+   "evidence": [
+    {
+     "file": "/home/liao/.config/systemd/user/king-order.service",
+     "line": 7,
+     "quote": "ExecStart=/bin/bash -c 'source /home/liao/.config/claude-migration/env.sh; exec /media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/dashboard/serve_order.sh'"
+    },
+    {
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/dashboard/serve_order.sh",
+     "line": 8,
+     "quote": "exec \"$KING_PY\" dashboard/launch_order.py >> dashboard/_order_app.log 2>&1"
+    },
+    {
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/dashboard/launch_order.py",
+     "line": 28,
+     "quote": "httpd = launch_app(capital=100000, host='0.0.0.0', port=5577, open_browser=False,\n                   strategy='king2_deploy')   # 啟動預設＝部署推薦策略，與作戰台顯示一致（修 king2 錯配）"
+    },
+    {
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/s3_order_app.py",
+     "line": 34,
+     "quote": "from s994_str_enhanced import get_strategy, STRATEGIES, regime_asof, today_drawdown, explain_selection"
+    },
+    {
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/s3_order_app.py",
+     "line": 1958,
+     "quote": "if isinstance(strategy, str):\n        init_name = strategy\n    elif report is None:\n        init_name = 'king2'\n    else:\n        init_name = 'king1'"
+    },
+    {
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/s994_str_enhanced.py",
+     "line": 171,
+     "quote": "def STR_king2_deploy(return_pos=False):\n    \"\"\"★≤1000萬部署推薦：全棧硬化(top-K12+夾b2/S_IND) + 流動性地板top70%(adv_floor0.3)."
+    },
+    {
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/s994_str_enhanced.py",
+     "line": 177,
+     "quote": "return STR_king2(return_pos=return_pos, adv_floor=0.3, top_k=12, harden_gates=True)"
+    },
+    {
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/s994_str_enhanced.py",
+     "line": 250,
+     "quote": "'king2_deploy':(STR_king2_deploy,'★≤1000萬部署推薦：全棧硬化+地板top70%（現況全期 Sharpe 2.71 / CAGR 81.4% / Calmar 3.48 / MDD -23.4%；舊104%/5.74為早期研究期含槓桿，勿當現況）'),"
+    },
+    {
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/dashboard/_order_app.log",
+     "line": 0,
+     "quote": "[order_app] 下單介面已啟動（背景，綁 0.0.0.0，策略=king2_deploy）…[order_compare] 錨定鎖：king2_deploy 窗2026-07-13 lock｜凍結 12 檔｜尚無已建部位（log mtime 2026-07-24 06:02；行號無固定值故標0）"
+    },
+    {
+     "file": "/home/liao/.config/systemd/user/king-dashboard.service",
+     "line": 7,
+     "quote": "ExecStart=/bin/bash -c 'source /home/liao/.config/claude-migration/env.sh; exec /media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/dashboard/serve.sh'"
+    },
+    {
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/dashboard/serve.sh",
+     "line": 6,
+     "quote": "exec \"$KING_PY\" dashboard/serve.py"
+    },
+    {
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/dashboard/build_data.py",
+     "line": 499,
+     "quote": "ap.add_argument('--strategy', default='king2_deploy', help='要建的策略名(見 DASH_STRATS)')"
+    },
+    {
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/dashboard/build_data.py",
+     "line": 6,
+     "quote": "#   python dashboard/build_data.py                       # 預設只建 king2_deploy"
+    },
+    {
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/s1_trade.py",
+     "line": 2521,
+     "quote": "strat = self._strategy\n                if strat is None:\n                    from s993_str_for_import import STR_king1\n                    strat = STR_king1"
+    },
+    {
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/_app_live.py",
+     "line": 5,
+     "quote": "from s993_str_for_import import STR_king1"
+    },
+    {
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/_app_live.py",
+     "line": 8,
+     "quote": "app = OrderApp(30000, report=rep, port=5577, strategy='king1').start().share().notify("
+    },
+    {
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/edge_supervisor.py",
+     "line": 91,
+     "quote": "def current_holdings():\n    pos = s.STR_king2(return_pos=True)"
+    },
+    {
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/edge_supervisor.py",
+     "line": 42,
+     "quote": "cr = s.STR_king2().creturn.pct_change().dropna()"
+    },
+    {
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/deploy_today.py",
+     "line": 22,
+     "quote": "import edge_supervisor as es"
+    },
+    {
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/s993_str_for_import.py",
+     "line": 43,
+     "quote": "pos2 = mask_date_range(pos, \"09-25\", \"11-10\", in_place=False)"
+    },
+    {
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/s993_str_for_import.py",
+     "line": 46,
+     "quote": "if return_pos:\n        return pos\n\n    report2 = RP(pos ,None,p_num=1,trade_at='close',sl= 1,tp=1)"
+    },
+    {
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/s991_find_strong.py",
+     "line": 94,
+     "quote": "pos2 = mask_date_range(pos, \"09-25\", \"11-10\", in_place=False)"
+    },
+    {
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/s991_find_strong.py",
+     "line": 97,
+     "quote": "report2 = RP(pos ,None,p_num=1,trade_at='close',sl= 1,tp=1)"
+    },
+    {
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/finlab_參考/s999_llm回測.py",
+     "line": 204,
+     "quote": "final_pos = mask_date_range(pos, \"09-25\", \"11-10\")"
+    }
+   ],
+   "notes": "補充發現與限制：(1) 變體錯配：互動下單 app（king-order.service, 5577）pin 在 king2_deploy（top_k=12+adv_floor=0.3+harden_gates），但無頭日終線 run_daily_deploy.sh（cron 20:00）→ deploy_today.py 的持股/健檢來自 edge_supervisor 的 STR_king2()（基礎版、無硬化無地板）——兩條產單路徑用的不是同一個策略變體，選股可能不同（top-K 截斷與流動性地板會改名單）。這是查證中觀察到的事實，未評估是否有人已知情。(2) _app_live.py（STR_king1, capital 30000）是舊 Windows 時代的手動啟動器：log 最後更新 2026-06-22、無任何 systemd/cron/腳本引用它，不在現行部署鏈上。(3) crontab 三條 KING 線：06:00 morning_refresh（預熱快取）、20:00 run_daily_deploy（edge_supervisor→deploy_today --push）、20:40 run_decay_watch。(4) 服務狀態實測：king-order.service 與 king-dashboard.service 皆 active（systemctl --user is-active）。(5) 遵守唯讀鐵律：本次只讀取，零寫入。(6) _order_app.log 的引用行無固定行號（append log），evidence 以 line 0 標示並附 mtime。"
+  },
+  "helper_semantics_audit": {
+   "helpers": [
+    {
+     "name": "RK",
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/s0_basedata.py",
+     "start_line": 422,
+     "end_line": 427,
+     "one_line_semantic": "橫斷面百分比排名：df.rank(axis=1, pct=True, ascending=True)，每日對所有股票升冪排名成 0~1。"
+    },
+    {
+     "name": "C_MI_MX_C",
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/s0_basedata.py",
+     "start_line": 838,
+     "end_line": 847,
+     "one_line_semantic": "窗內位置比：(x − rolling_min(window)) / (rolling_max(window) − x + 1e-10)；離窗底越遠、離窗頂越近值越大（接近窗頂時分母趨近 0 而爆大），是「貼著 window 日高點」強度指標。"
+    },
+    {
+     "name": "PCT",
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/s0_basedata.py",
+     "start_line": 505,
+     "end_line": 507,
+     "one_line_semantic": "df / df.shift(window)：與 window 個「資料列」（交易日列，非日曆日）前的比值，即 1+區間報酬。"
+    },
+    {
+     "name": "NH",
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/s0_basedata.py",
+     "start_line": 639,
+     "end_line": 640,
+     "one_line_semantic": "近高點指標：df / (rolling(D).max()×num + epsilon)，價格相對 D 日滾動高點的 num 折（預設 0.95）；>1 表示已站上 95% 高點線。"
+    },
+    {
+     "name": "td2",
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/s0_basedata.py",
+     "start_line": 354,
+     "end_line": 380,
+     "one_line_semantic": "把日期索引的 Series 廣播成與 C() 同形狀的 (日期×股票) DataFrame：reindex 對齊 C() 交易日（缺日成 NaN）後 np.repeat 到每一欄，同一天每檔股票同值；零位移、零平滑。"
+    },
+    {
+     "name": "extend_true_byindex",
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/s0_basedata.py",
+     "start_line": 1496,
+     "end_line": 1526,
+     "one_line_semantic": "營收週期展延：對每個 rev_index 日（須存在於 buy_df.index），把該日為 True 的股票，從該日（含）用 .loc 日曆切片標 True 到下一個 rev_index 日的前一天；輸出以全 False 起底、只保留展延段。"
+    },
+    {
+     "name": "extend_false_from_index",
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/s0_basedata.py",
+     "start_line": 1538,
+     "end_line": 1557,
+     "one_line_semantic": "營收公布日前禁區：對每個 rev_index 日，其前 pre_days 個「日曆日」（pd.Timedelta，非交易日；不含當日）與後 post_days 個日曆日整列設 False，不在 index 的日期跳過。"
+    },
+    {
+     "name": "extend_false_forward",
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/s0_basedata.py",
+     "start_line": 1584,
+     "end_line": 1603,
+     "one_line_semantic": "False 前向傳染：先 fillna(True)，再以 (~mask).rolling(window=days+1, min_periods=1).max() 按「列位置」檢測——任一列出現 False 就把該列起連同其後 days 個資料列全設 False（對日頻框即交易日列）。"
+    },
+    {
+     "name": "skip_holiday_mask",
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/s0_basedata.py",
+     "start_line": 1645,
+     "end_line": 1690,
+     "one_line_semantic": "長假跳日修正：偵測 price_df.index 相鄰日期差 ≥ min_gap_days 的跳日，對跳日前第 2 列設 False、前第 1 列設 True（提前收攤一天）；STR_king1 傳 min_gap_days=100，實測「沒有偵測到跳躍」直接原樣返回＝實質 no-op。"
+    },
+    {
+     "name": "mask_intersection",
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/s0_basedata.py",
+     "start_line": 1614,
+     "end_line": 1639,
+     "one_line_semantic": "寬容版 AND：建一張與 base_df 同形狀的全 True 表，只在 base 與 mask 的 index∩columns 交集格寫入 base & mask，交集外一律保持 True（mask 無意見處不否決）。"
+    },
+    {
+     "name": "mask_date_range",
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/s0_basedata.py",
+     "start_line": 2112,
+     "end_line": 2171,
+     "one_line_semantic": "年度月日禁區：把「每一年」start_md~end_md（MM-DD 字典序比較，支援跨年）落入區間的所有列整列設 False；預設 coerce_bool=True 最後 fillna(False).astype(bool)。"
+    },
+    {
+     "name": "RP",
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/s0_basedata.py",
+     "start_line": 2174,
+     "end_line": 2184,
+     "one_line_semantic": "finlab.backtest.sim 的固定參數包裝 lambda：pos→position、rsmp→resample、1/p_num→position_limit、trade_at→trade_at_price、sl→stop_loss、tp(預設1)→take_profit，固定 fee_ratio=1.425/1000/3、upload=False、fast_mode=False、mae_mfe_window=40。"
+    },
+    {
+     "name": "C",
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/s0_basedata.py",
+     "start_line": 51,
+     "end_line": 51,
+     "one_line_semantic": "lambda: data.get('price:收盤價')——未還原的原始日收盤價 (日期×股票)。"
+    },
+    {
+     "name": "REV",
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/s0_basedata.py",
+     "start_line": 127,
+     "end_line": 127,
+     "one_line_semantic": "lambda: data.get('monthly_revenue:當月營收')——月營收，FinLab 已把 index 對齊到公告截止日。"
+    },
+    {
+     "name": "REVYOY",
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/s0_basedata.py",
+     "start_line": 129,
+     "end_line": 129,
+     "one_line_semantic": "lambda: data.get('monthly_revenue:去年同月增減(%)')——月營收年增率 %。"
+    },
+    {
+     "name": "ROE",
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/s0_basedata.py",
+     "start_line": 185,
+     "end_line": 185,
+     "one_line_semantic": "lambda: data.get('fundamental_features:ROE稅後').deadline()——稅後 ROE，.deadline() 對齊財報申報截止日避免前視。"
+    },
+    {
+     "name": "MV",
+     "file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/s0_basedata.py",
+     "start_line": 121,
+     "end_line": 121,
+     "one_line_semantic": "lambda: data.get('etl:market_value')——市值。"
+    }
+   ],
+   "td2_semantics": "td2 不是位移也不是平滑，是「Series→全市場廣播」。它把一個日期索引的 Series（如全市場強勢群平均動能）reindex 對齊到 C() 的交易日索引（series 缺的交易日變 NaN），再用 np.repeat 沿欄複製成與 C() 完全同 index/columns 的 (日期×股票) DataFrame——同一天每檔股票拿到同一個值。名稱易誤導為「2日位移」，實際 0 日位移、0 平滑，純粹是讓市場層 Series 能與個股層布林表做逐格運算的形狀轉換（td 的安全版：不重設 C() 的 index 以免 FinlabDataFrame 判定 lookahead）。s0_basedata.py 354-380 行。",
+   "mask_intersection_semantics": "mask_intersection(A,B)：建立與 A 同形狀的全 True 表，只在 index∩columns 交集格寫入 A&B，交集外保持 True（不 fillna、不對齊擴張）。與 pandas 原生 A&B 的差異有三：(1) 形狀——原生 & 對齊成 index/columns 聯集（實測 STR_king1 中 A=(3225,2099)、B=(4732,2764)，A&B 膨脹成 (4734,2764)），mask_intersection 恆保 A 的形狀；(2) 缺覆蓋政策——B 沒覆蓋到的格，原生 & 給 False（同名欄缺列）或 NaN（缺欄，且該欄 dtype 退化成 float64，實測 665 欄變 float），mask_intersection 給 True（寬容：B 無意見就放行）；(3) NaN——兩者在交集格內同為 pandas & 語義，差別全在交集外。因此 A & mask_intersection(A,B) 與 A&B「幾乎但不嚴格」等價：在 B 有覆蓋的格上，mask_intersection 已含 A&B，外層再 &A 是冪等（該範圍內確實冗餘）；但 A 有 2 個日期列不在 B 的交易日索引裡（月營收截止日非交易日），該處 mask 版保留 A 的 True、原生 & 會殺成 False——實測全表 22,140 個 True 格中兩式相差 24 格。結論：不是嚴格冗餘，是刻意的「B 只在有資料處否決」設計；等價條件＝B 的 index/columns 完全覆蓋 A。s0_basedata.py 1614-1639 行。",
+   "extend_false_forward_semantics": "extend_false_forward(S,5) 機制（1584-1603 行）：(1) 先 fillna(True) 轉純布林——NaN 視為 True、不觸發展延；(2) 取反轉 int，做 rolling(window=days+1=6, min_periods=1).max()——這是對 DataFrame「列位置」滾動，不是日曆日；(3) 視窗內（含當列與其前 5 列）只要出現過 False，當列即 False。效果＝每個 False 往後傳染 5 個「資料列」；因為 S_IND 是 td2 產出、index 為 C() 的交易日曆，所以在 STR_king1 中是 5 個交易日（跨長假時日曆跨度更長）。對比：同檔的 extend_false_from_index 用 pd.Timedelta 是日曆日，兩者單位不同。",
+   "empty_cohort_nan_behavior": "是，兩段推論都對。PCT(C(),5)[s1&s2&s3] 是 df.where(mask) 語義：mask False 的格變 NaN；某日 s1&s2&s3 全 False 時該列全 NaN，.mean(axis=1)（skipna 也救不了空集合）＝NaN——實測樣本 4,732 個交易日中有 199 個空群體 NaN 日。td2 把該 NaN 廣播到當日整列，NaN > 1.005 在 pandas 逐格判 False（實測確認），所以空群體日 S_IND 整列 False＝當日判「不持有」。且要再加一層：S_IND 隨後進 extend_false_forward(S_IND,5)，這個 False 會再往後傳染 5 個交易列——空群體一天，實際否決 6 個交易日的持有（在 B 有覆蓋 A 的格上，經 mask_intersection 與最終 & 傳到 pos）。",
+   "rp_trade_timing": "RP 包的是 finlab.backtest.sim（s0_basedata.py 第 3 行 from finlab.backtest import sim）。定義逐字（2174-2184 行）：RP = lambda pos,rsmp,p_num,trade_at,sl,tp=1: sim(pos, resample=rsmp, position_limit=1/p_num, trade_at_price=trade_at, take_profit=tp, stop_loss=sl, fee_ratio=1.425/1000/3, name='Combined_Report', upload=False, fast_mode=False, mae_mfe_window=40)。時序：trade_at='close' 時，訊號日 t 是用「t+1 的收盤」成交，finlab sim 內部自動 shift——但 shift 在閉源 Cython 核心 backtest_ 裡（Python 外圍 sim.py 的 arguments() 把 position 原封不動轉 numpy 傳入，無任何 shift），故以實測證明：用 finlab 2.0.13 對 0050 造 position（2024-01-04 起為 True），trades 顯示 entry_sig_date=2024-01-04、entry_date=2024-01-05（下一交易日），且 creturn 在 01-05 扣手續費 0.999525=1−1.425/3000、損益自 01-05 收盤起算；出場同理：訊號轉 False 首日 01-12=exit_sig_date、exit_date=01-15（次一交易日收盤成交）。結論：STR_king1 的 pos 不需（也不應）自行 shift，sim 已內建 t 訊號→t+1 成交的延遲；trades 表的 entry_sig_date/entry_date 雙欄位即此語義的固定介面。STR_king1 呼叫 RP(pos, None, p_num=1, trade_at='close', sl=1, tp=1)：resample=None＝position 每次變動即換股、position_limit=1、停損停利各設 100%＝實質關閉。",
+   "redundancy_A_and_AB": "不是嚴格冗餘。在 B（hold_situation，C() 完整形狀）有覆蓋 A 的格上，A & mask_intersection(A,B) ≡ A&B（mask 交集格已寫入 A&B，外層 &A 冪等）；但實測 A 有 2 個索引日不在 B 的交易日曆內（月營收截止日落在非交易日），該處 mask 版保留 A 的值（多出 24 個 True 格：22,140 vs 22,116），原生 A&B 則會把這些格殺成 False，且形狀膨脹成聯集 (4734,2764)、665 個 B 獨有欄 dtype 退化為 float64/NaN。語義上這是「寬容 AND」：hold_situation 只在自己有資料的日子行使否決權。",
+   "notes": "驗證方式：(1) 全部 17 個 helper 逐一讀 s0_basedata.py 原始碼定位；(2) 時序問題用 /home/liao/finlab_env（finlab 2.0.13）真跑 sim 實測（資料取自 MyHDD/twdata/finlab_db 鏡像的 scratchpad 副本＋prefer_local_if_exists，僅 etl:is_flagged_stock 與 etl:financial_statements_deadline 兩小表走雲端補抓，日額度用 3.59/5 GB）；(3) mask_intersection 冗餘問題用 STR_king1 真實中間量（buy→A、S_IND→B）逐格比對。鐵律遵守：finlab_usage_guide 目錄零寫入（import 前設 sys.dont_write_bytecode，事後以 find -newermt 確認無新檔）。另兩個對上游有用的旁證：skip_holiday_mask(…,100) 在 STR_king1 中實測不觸發＝no-op；STR_king1 內 mask_date_range 產出的 pos2（09-25~11-10 年度禁區）是死碼——第 43 行算了但第 46/49 行用的都是 pos。RK/C_MI_MX_C/PCT/NH 的窗口與 shift 都以「資料列」（交易日）為單位；extend_false_from_index 是唯一用日曆日的展延函式。"
+  },
+  "adversarial_verdict": {
+   "refuted_claims": [
+    "claim1 反駁成功：live 真錢下單線的實際策略不是 STR_king1，是 king2_deploy。證據：(a) /home/liao/.config/systemd/user/king-order.service:7 → dashboard/serve_order.sh:8 → dashboard/launch_order.py:28-29 明文 launch_app(..., strategy='king2_deploy')，行尾註解「修 king2 錯配」；(b) dashboard/_order_app.log 多次逐字印「[order_app] 下單介面已啟動（背景，綁 0.0.0.0，策略=king2_deploy）」與「[order_compare] 錨定鎖：king2_deploy 窗2026-07-13 lock｜凍結 12 檔」（log mtime 2026-07-24 06:02）；(c) systemctl --user is-active king-order.service 實測回 active。STR_king1 只出現在兩個不在部署鏈上的位置：s1_trade.py:2521-2523 的 Pipe strategy=None fallback（launch_app 已傳字串 'king2_deploy'，經 s3_order_app.py:1958-1959 直接採用，永遠走不到），以及 _app_live.py（mtime 2026-06-22、capital 30000、無任何 systemd/cron 引用的舊 Windows 時代手動啟動器）。甚至 launch_app 自身的 fallback 階梯（s3_order_app.py:1958-1963）在無字串、無 report 時退 'king2' 而非 king1。claim1 唯一可救的半句是「STR_king1（s993）＝owner 貼的王牌本尊」——s993 檔頭確為『#王牌策略』且 aaro wiki champion-identity.md 已凍結此對應（CHAMP-king1-original, sha bb75e2709ab2d10c）；但『live 預設策略』的主張在服務、程式、log 三層全被反證。附帶：aaro/pub/wiki/src/champion-identity.md:8 自己就寫『真錢自動線跑的是 king2_deploy、owner 貼的是王牌本尊 king1』——claim1 連專案自己的 wiki 都矛盾。"
+   ],
+   "confirmed_claims": [
+    "claim2 查證後確認：s994_str_enhanced.py:49 STR_king2 預設 w=0.35，line 69 score=(1-w)*rev+w*tilt（use_chip=True 時 tilt=(fp+_chip_score())/2, line 61），即 0.65×RK(REVYOY)+0.35×(指紋5分量+籌碼4分量)/2；line 85 b1=((RK(ROE)+RK(營益率)+RK(稅後淨利率))/3)>0.3 三維品質複合（皆 .deadline() 防前視, line 78-79）；line 100-109 時間狀態機與 s993:19-40 結構逐行同構（extend_true_byindex→extend_false_from_index pre_days=5→s1s2s3→S_IND>1.005→extend_false_forward 5→skip_holiday_mask 100→mask_intersection→&），harden 版 s_ind_thr=min(1.005,1.02)=1.005 數值不變。wiki 0.65/0.35 來源鏈確認：champion-challenger.md:47、exp-f01-king2-overlap.md:32、autonomous-research.md:169 皆此公式，源頭唯一＝s994 w=0.35。一處措辭要修：king2 不只是『候選』——其參數化變體 king2_deploy（s994:171-176＝STR_king2(adv_floor=0.3, top_k=12, harden_gates=True)）就是現任真錢部署策略，『候選』一詞低估其地位。",
+    "claim3 查證後確認（附精確化）：residuals.py:41-43 W=0.35/TOP_K=12/ADV_FLOOR=0.3，line 220 score=(1-W)*rev_r+W*(fp+chip)/2，line 222-223 四閘 q>0.3 & b2>0.9 & b3>0.75 & b4>0.6 & advr>0.3，line 233 取固定 top-12——與 king2_deploy 選股層逐項對上（harden clamp min(0.9,0.97)=0.9、min(1.005,1.02)=1.005 數值等於 base，鏡像直用 base 值無差異，s994:84 親驗）。持有層確為單段簡化：line 196-206 錨日→t+1 進場→下一錨前 6 日曆日回推最後持有日→次一交易日出清，line 235 用 etl:adj_close 毛報酬；S_IND 狀態機/5日冷卻/skip_holiday/RP 費用全不執行（MIRROR_DEVIATIONS #2/#3 自報, residuals.py:50-53）；regime_weak 0050<MA50 只做事件標籤（line 185-187, 261）。絕非 king1（king1 無複合分/無三維閘/無地板/0.93 可變檔數, s993:7,16）。精確化：claim3 說『king2 的 score 節點』太鬆——鏡像忠實的是 king2_deploy 變體的選股層，非 STRATEGIES['king2'] 預設（top_k=None→0.93 可變檔數、adv_floor=None, s994:49,98）；wiki exp-f01-king2-overlap.md:51 已自行標注 SCORE≠POLICY。",
+    "claim4 查證後確認（附一個框架修正）：pos2 季節窗（09-25→11-10）在全部可匯入/部署碼中是死碼。s993_str_for_import.py:43 算了 pos2，line 46-47 return pos、line 49 RP(pos)——算完即丟；s991_find_strong.py:94/97 同型死碼且 grep 全目錄無任何檔 import s991；唯一把該遮罩套到最終持倉的是 finlab_參考/s999_llm回測.py:191/204/325（LLM 回測參考範例，grep 無任何檔 import s999，不在部署鏈）；live 策略 s994 全檔 grep 無 mask_date_range→全年運作。框架修正：claim4 隱含『live 版（king1 的 live 版）全年運作』——實際 live 跑的根本是 king2_deploy（見 claim1 反駁），但結論不變：部署鏈上任何路徑都沒有季節窗生效，全年運作成立。"
+   ],
+   "new_findings": [
+    "兩條產單路徑用不同策略變體（潛在名單分歧）：互動下單 app（5577）pin king2_deploy（top-12+地板+harden），但無頭日終線 crontab 20:00 run_daily_deploy.sh → deploy_today.py:22 import edge_supervisor，而 edge_supervisor.py:90-91 current_holdings() 用 s.STR_king2()（基礎版：top_k=None→0.93 可變檔數、無 adv_floor）、line 42 edge 監看同樣用基礎版——top-K 截斷與流動性地板會改名單，兩路徑選股可能不同。此錯配已在 deploy 取證 notes 提及，本輪親驗 edge_supervisor.py:42,90-91 屬實。",
+    "launch_order.py:29 註解『修 king2 錯配』與 log 歷史相互印證：_order_app.log 較早一行印『策略=king2』、其後全部為『策略=king2_deploy』——曾存在下單 app 跑 king2 基礎版與作戰台顯示不一致的時期，後被修正 pin 死。",
+    "champion_freeze.py 的 RULE_SPEC（line 89-91）完整凍結含 S_IND 狀態機與 skip_holiday 的全規則文字，而 residuals.py 執行面不算 S_IND——『凍結文本比執行面完整』屬實，佐證 claim3 鏡像定位應叫 king2_score_only_simplified（residuals.py 檔頭 line 5-6 亦自證對真錢線零 import 零讀寫，僅照凍結規則重算）。",
+    "claim1 的錯誤敘事有既存正確版可對齊：aaro/pub/wiki/src/champion-identity.md 已完成同一個對帳且結論正確（雙冊分開：CHAMP-king2-v1=自動線現任、CHAMP-king1-original=owner 王牌本尊另冊 lineage king1-line）；上游若採納本輪裁決，claim1 應改寫成與該 wiki 頁一致，而非另創第三種說法。",
+    "s3_order_app.py fallback 階梯精確語義（line 1956-1963）：strategy 給字串→直接用；無字串且無預跑 report→'king2'；有預跑 report→'king1'（與 _app_live 對齊）。故『king1 是預設』僅在『手動預跑 report 再啟動』的舊用法下成立——這正是 _app_live.py 的形狀，也可能是 claim1 誤判的來源。",
+    "『owner 貼的王牌＝s993 逐字』這一環本輪未能獨立重驗（手上沒有 owner 貼文原文），採信 champion-identity.md 的既有凍結對帳（STR_king1 sha bb75e2709ab2d10c）；s993 檔頭『#王牌策略』註解與其一致。若上游要求零信任，需另補 owner 貼文原文比對。"
+   ]
+  }
+ }
+}

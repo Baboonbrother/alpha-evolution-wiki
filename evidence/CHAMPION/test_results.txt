@@ -1,0 +1,11 @@
+=== 冠軍身分對帳考卷（fail-closed）===
+  [PASS] 真錢線零寫入（s993/s0_basedata 現檔 sha＝凍結 sha）
+  [PASS] STR_king1 逐字完整＋17 helper 全 hash
+  [PASS] 兩冊分開（king1-line 與 king2-line 並存,禁止混稱）  — ['king1-line', 'king2-freeze', 'king2-line']
+  [PASS] champion_registry append-only（UPDATE 被擋）
+  [PASS] dormant 旗標入冊（pos2/b5 iloc[-1]/mask 24格/空群體199日）
+  [PASS] mask_intersection 語義（交集處 AND,非交集預設 True,保 A 形狀）
+  [PASS] extend_false_forward 語義（False 延 2 列;NaN 視為 True）
+  [PASS] 身分紀錄含三路取證＋部署鏈 file:line 證據
+======================================================
+冠軍身分考卷全綠 ✓（零寫入/凍結/兩冊/append-only/dormant/語義實測/紀錄）

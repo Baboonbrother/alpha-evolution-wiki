@@ -1,0 +1,33 @@
+{
+ "scoping_id": "EXP-F02.1-SEMANTIC",
+ "superseded": [
+  "77c61c38cf75313a",
+  "cdcefb3f6c4a5114"
+ ],
+ "new_edges": [
+  "f1565c1c3a397032",
+  "0435c3ff66ebc8a6"
+ ],
+ "spec_binding": {
+  "model": "linear_logistic",
+  "penalty": "lambda_1.0_fixed_not_nested",
+  "feature_form": "all_11_joint",
+  "target": "absolute_tail_binary_q10_q90",
+  "decision_time": "monthly_anchor",
+  "decision_layer": "selection"
+ },
+ "not_covered": [
+  "nonlinear_models",
+  "per_block_economic_families(投信/外資/自營/共識/加速反轉)",
+  "interactions(法人×regime,法人×集保)",
+  "within_event_ranking_target",
+  "event_risk_target_separated",
+  "holding_overlay",
+  "exit_trigger",
+  "nested_lambda",
+  "base_residual_orthogonal_test"
+ ],
+ "vacuous_flag": "segment_2017plus=VACUOUS_SEGMENT_CHECK",
+ "statistical_additions_deferred_to": "matrix_engine(bootstrap CI/等效區間/pooled OOF/事件加權/排末折敏感性=矩陣欄位,非再開F02.2)",
+ "note": "原exp_f02_result.json帶run_hash為run輸出,事後不改;本檔=證據層scoping事件"
+}

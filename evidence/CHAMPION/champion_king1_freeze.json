@@ -1,0 +1,121 @@
+{
+ "champ_id": "CHAMP-king1-original",
+ "name": "王牌本尊 STR_king1（owner 2026-07-24 貼文＝此檔逐字）",
+ "source_file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/s993_str_for_import.py",
+ "source_sha256": "01e9d2e91373c2a869877fa72052599601efa3ccd41710cb1733367bfa2fcf73",
+ "helpers_file": "/media/liao/MyHDD/舊機遷移資料/recursive_temporal_cognitive_grid/finlab_usage_guide/s0_basedata.py",
+ "helpers_sha256": "a401d8dc1eb329019e00a236a041a3abd7f059553398a54992cd410730a014b6",
+ "sha_note": "registry 列的 sha 為換行正規化文本雜湊（首刻）;本檔 source_sha256=原始bytes,函式級 sha 用正規化文本（抽取語義層,跨換行格式穩定）",
+ "source_sha256_textnorm": "b1fa4bfc79055c054497b9e09748ae9117c79d225ff018ad878040270df860d3",
+ "helpers_sha256_textnorm": "e1878f5356b198351cd6cd5045784c5a2045e617ef8e56f16c023363e8e0a10a",
+ "strategy_sha256_16": "bb75e2709ab2d10c",
+ "helpers": {
+  "RK": {
+   "sha256_16": "f3fdcbbfaf2038b1",
+   "n_lines": 6
+  },
+  "C_MI_MX_C": {
+   "sha256_16": "c3425fbec5cd6f79",
+   "n_lines": 10
+  },
+  "PCT": {
+   "sha256_16": "e0c48d09eaa62d0d",
+   "n_lines": 3
+  },
+  "NH": {
+   "sha256_16": "8093ee39bdb94969",
+   "n_lines": 2
+  },
+  "td2": {
+   "sha256_16": "239b49e37e829602",
+   "n_lines": 27
+  },
+  "extend_true_byindex": {
+   "sha256_16": "2031bc5eb5dfcc1e",
+   "n_lines": 31
+  },
+  "extend_false_from_index": {
+   "sha256_16": "52d8f6500cbfb937",
+   "n_lines": 20
+  },
+  "extend_false_forward": {
+   "sha256_16": "e2c0df09022c9a93",
+   "n_lines": 20
+  },
+  "skip_holiday_mask": {
+   "sha256_16": "3b60992802f5d1f7",
+   "n_lines": 46
+  },
+  "mask_intersection": {
+   "sha256_16": "93ecdc0c4b40b155",
+   "n_lines": 26
+  },
+  "mask_date_range": {
+   "sha256_16": "5c56488b7090a354",
+   "n_lines": 60
+  },
+  "RP": {
+   "sha256_16": "a2e5ee1e9021c7b6",
+   "n_lines": 11
+  },
+  "C": {
+   "sha256_16": "8d39d833b3a0c9f5",
+   "n_lines": 1
+  },
+  "REV": {
+   "sha256_16": "913828222acd18f0",
+   "n_lines": 1
+  },
+  "REVYOY": {
+   "sha256_16": "b9453767cb32551f",
+   "n_lines": 1
+  },
+  "ROE": {
+   "sha256_16": "b763f3328bb9f40c",
+   "n_lines": 1
+  },
+  "MV": {
+   "sha256_16": "a9ed1fb415041678",
+   "n_lines": 1
+  }
+ },
+ "hierarchical_spec": {
+  "L1_個股特徵": {
+   "b1": "RK(ROE())>0.3（純ROE排名閘,非king2三維複合）",
+   "b2": "RK(C_MI_MX_C(C(),200))>0.9（200日區間位置前10%）",
+   "b3": "RK(C_MI_MX_C(C(),10))>0.75（10日區間位置前25%）",
+   "b4": "RK(PCT(C(),15))>0.6（15日報酬排名前40%）"
+  },
+  "L2_條件選股": {
+   "rule": "buy = RK(REVYOY())[b1&b2&b3&b4] > 0.93",
+   "運算順序": "先全市場 RK(REVYOY) 再套遮罩再>0.93（非遮罩後重排名——對照臂另設,不得混稱）",
+   "檔數": "可變（合格者中 REVYOY 全市場排名前7%）,非Top-K"
+  },
+  "L3_領先股群體聚合": {
+   "cohort": "s1=RK(NH(C(),160))>0.9 & s2=RK(C_MI_MX_C(C(),200))>0.9 & s3=RK(C_MI_MX_C(C(),10))>0.75",
+   "aggregate": "S_IND = td2(PCT(C(),5)[s1&s2&s3].mean(axis=1)) > 1.005",
+   "語義": "市場最強一批股票當內生市場感測器（個股→群體選擇→聚合→市場狀態）"
+  },
+  "L4_持有狀態機": {
+   "冷卻": "hold_situation = extend_false_forward(S_IND,5)（熄火後風險關閉延續5日,hysteresis）",
+   "合成": "pos = buy_revcycle_sellforward_skipholiday & mask_intersection(同左, hold_situation)"
+  },
+  "L5_時間政策": {
+   "月營收週期": "extend_true_byindex(buy, REV().index)（公告錨日取名單,窗內凍結）",
+   "提前退出": "extend_false_from_index(..., pre_days=5)（下次公告錨前5日先出）",
+   "假日": "skip_holiday_mask(...,C(),100)",
+   "季節窗": "pos2 = mask_date_range(pos,'09-25','11-10') 【DORMANT:算了未用,回測與return_pos都用pos】"
+  },
+  "L6_執行": "RP(pos, None, p_num=1, trade_at='close', sl=1, tp=1)"
+ },
+ "dormant_flags": [
+  "pos2 季節窗(09-25~11-10):死碼——s993 與 s991 都算了未餵給任何 RP/下單/監控",
+  "b5 = RK(MV()).is_largest(count_flt):死碼——buy 未使用;若未來啟用,count_flt 用 .iloc[-1]（最後一日檔數套全歷史）=未來資訊污染,必須改逐日 count series",
+  "count_flt:僅 b5 用途,同上",
+  "hold_situation2 = mask_intersection(A,hold) 後又 pos = A & hold_situation2:實測近冗餘但非嚴格等價——mask_intersection 恆保A形狀且非交集預設True,A有2個非交易日索引→與原生A&B差24格(22140 vs 22116 True);鏡像必須逐字重現不得用A&B替代",
+  "空群體日:td2 純廣播無ffill,cohort平均NaN→NaN>1.005=False=風險關閉+5日冷卻;實測 199/4732 交易日(4.2%)由此 NaN 語義沉默決定——鏡像必須顯式寫出"
+ ],
+ "deployment_status": "手動路徑引用(s1_trade fallback/_app_live);自動真錢線跑 king2_deploy(另冊)",
+ "frozen_at": "2026-07-24",
+ "strategy_source_note": "逐字本體留本機 engine/out/（真錢鄰接不上repo）;strategy_sha256_16 供指認"
+}

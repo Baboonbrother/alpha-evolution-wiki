@@ -11,5 +11,6 @@
   [PASS] 圖候選由 evi_edge 查詢產生；刪一條邊 → 清單改變（Major 7 驗收）  — trust_streak 移除後 10
   [PASS] 零 Sharpe/投組（原始碼掃描）  — []
   [PASS] prereg 不可變（凍結sha=現檔實算）＋claim_scope 含 PROVISIONAL＋非Alpha＋零偏離
+  [PASS] F02.1 降級：not_detected_under_f02_spec×2＋spec六欄＋VACUOUS標記＋舊邊保留＋supersession  — scoped=2 kept=2 sup=2
 ======================================================
-F02 考卷全綠 ✓（門檻/embargo/split/禁cls/模型/檢定力/回寫/圖候選/prereg）
+F02 考卷全綠 ✓（門檻/embargo/split/禁cls/模型/檢定力/回寫/圖候選/prereg/F02.1降級）
