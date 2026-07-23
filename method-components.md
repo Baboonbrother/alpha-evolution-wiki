@@ -1,10 +1,15 @@
+---
+title: 方法：部件從哪取用、怎麼啟用
+group: 方法
+---
+
 # 方法：部件從哪取用、怎麼啟用
 
 ## 這一頁要回答什麼
 
-[上一頁](method-strategy-spec.md)說了策略基因由九部件組成、由 diff 閘守單變因。這一頁把「規格」落到「真的能算出一張持股表」——一步步走過：一條**特徵代數 DSL 字串**怎麼被驗證成合法特徵、**speclang 六算子**怎麼把這些特徵組成一條策略、**finlab_db 價量命名空間**從哪裡餵資料進來、**事件錨＋t+1** 怎麼把訊號變成無前視的部位。這是整台引擎唯一「碰真資料」的地方，別的層都是它的投影。
+[[method-strategy-spec|上一頁]]說了策略基因由九部件組成、由 diff 閘守單變因。這一頁把「規格」落到「真的能算出一張持股表」——一步步走過：一條**特徵代數 DSL 字串**怎麼被驗證成合法特徵、**speclang 六算子**怎麼把這些特徵組成一條策略、**finlab_db 價量命名空間**從哪裡餵資料進來、**事件錨＋t+1** 怎麼把訊號變成無前視的部位。這是整台引擎唯一「碰真資料」的地方，別的層都是它的投影。
 
-真相源：`engine/speclang.py`（六算子）、`engine/spec.py`（九部件組譯）、`engine/compile_positions.py`（部位編譯）、以及唯讀匯入的 [feature-algebra](fw-feature-algebra.md) `algebra.py`／`data.py`。
+真相源：`engine/speclang.py`（六算子）、`engine/spec.py`（九部件組譯）、`engine/compile_positions.py`（部位編譯）、以及唯讀匯入的 [[fw-feature-algebra|feature-algebra]] `algebra.py`／`data.py`。
 
 ## 組裝流程圖：原始資料 → 特徵 → 算子 → 規格 → 部位
 
@@ -35,14 +40,14 @@ flowchart TD
 
 ## ① 特徵代數 DSL：一條字串怎麼被驗證成合法特徵
 
-`selection_policy` 裡的每一條過濾式與排序鍵都是 [特徵代數](fw-feature-algebra.md)的 DSL 原文字串。speclang **不自己解析特徵**，一律轉手 `algebra.from_dsl()`：
+`selection_policy` 裡的每一條過濾式與排序鍵都是 [[fw-feature-algebra|特徵代數]]的 DSL 原文字串。speclang **不自己解析特徵**，一律轉手 `algebra.from_dsl()`：
 
 - **白名單 AST parser**：只准算子呼叫、常數、白名單節點，禁任意 Python。
 - **型別推導**：每個特徵算出 dtype。`Universe` 的過濾式**必須 dtype=bool**（`_check_universe` 逐條檢查，非布林即拒），因為池篩選是布林事件面板的交集；`RankBy` 的排序鍵**必須數值**（布林不可排序）。
 - **內容尋址 fid**：合法特徵回一個 `sha256(正規化 DSL)` 的 fid，進 spec_member 供查重。
 - **PIT 靠構造**：特徵代數的算子庫沒有前視算子（例如 `RollMax(close, w=250, lag=1)` 的 lag 是刻意設計），所以「運算合法」由文法保證。
 
-真實例子（[候選 C](exp-001-candidate-c.md) 的價格強勢濾網）：
+真實例子（[[exp-001-candidate-c|候選 C]] 的價格強勢濾網）：
 
 ```
 GEc(RankPct(MinMaxScale(close, RollMin(close,w=250), RollMax(close,w=250))), c=0.5)
@@ -71,7 +76,7 @@ GEc(RankPct(MinMaxScale(close, RollMin(close,w=250), RollMax(close,w=250))), c=0
 ExitRule( RebalanceOn( <selection 四算子鏈>, anchor='rev_announce' ), rule='B', days=3 )
 ```
 
-這個切分讓 [diff 閘](method-strategy-spec.md)能分辨「改選股」與「改退出」是兩個不同部件的變異。
+這個切分讓 [[method-strategy-spec|diff 閘]]能分辨「改選股」與「改退出」是兩個不同部件的變異。
 
 ## ③ finlab_db 價量命名空間：資料從哪裡進來
 
@@ -89,31 +94,27 @@ speclang 把封閉詞彙表寫死，不許自由字串亂接欄位：
 2. **t+1 執行**（`_next_trading_day`）：訊號在錨日 d 形成，執行日是 d 之後**第一個交易日**（`searchsorted(d, side="right")`）——當天訊號不當天成交。
 3. **排程退出日**（`exit_date`）：規則 A ＝下一事件的執行日；規則 B ＝下一事件執行日**往前 N 個交易日**（且不早於本次執行日）。區間內最後一個事件無下一錨時，`exit_date` 誠實留 `NaT`，不虛構。
 
-輸出的**樣本單位紅線**（總綱鐵律 6）：一列 ＝ 一次決策事件的一檔目標持股，事件軸是公告日，不是交易日。這保證了 [部署同形閘](method-gates.md)裡「回測資料集行數 ＝ 決策事件數」的斷言（[實驗 000](exp-000-engine-first-run.md) 跑出 138 個換股事件、[事件樣本卷](method-gates.md)驗的就是它）。
+輸出的**樣本單位紅線**（總綱鐵律 6）：一列 ＝ 一次決策事件的一檔目標持股，事件軸是公告日，不是交易日。這保證了 [[method-gates|部署同形閘]]裡「回測資料集行數 ＝ 決策事件數」的斷言（[[exp-000-engine-first-run|實驗 000]] 跑出 138 個換股事件、[[method-gates|事件樣本卷]]驗的就是它）。
 
 ## 九部件各自從哪個框架「取用、啟用」
 
 把上面串起來，九部件在啟用時各自向哪個既有資產借力：
 
-- **selection_policy** ← [特徵代數](fw-feature-algebra.md)（合法特徵、fid）＋ speclang 四算子鏈。
-- **holding_policy** ← [持有期生命週期](fw-holding-lifecycle.md)的退出規則（A/B 已啟用、C/D 留白）＋特徵代數（未來狀態式退出的特徵）。
+- **selection_policy** ← [[fw-feature-algebra|特徵代數]]（合法特徵、fid）＋ speclang 四算子鏈。
+- **holding_policy** ← [[fw-holding-lifecycle|持有期生命週期]]的退出規則（A/B 已啟用、C/D 留白）＋特徵代數（未來狀態式退出的特徵）。
 - **execution_policy** ← AARO evaluator 契約：錨、t+1、成本口徑（沿 AARO config 凍結值）。
-- **data_contract** ← 新增資訊合法性契約：每欄 source＋pit_note（七時戳為設計，見 [時間層](fw-temporal.md)）。
-- **world_hypothesis** ← [世界訊號](fw-world-signal.md)（薄縱切代多為空）。
-- **research_claim／evaluation_contract** ← [strategy-dev 預註冊契約](fw-research-bilingual.md)（主張型別、基準、否證集合）。
+- **data_contract** ← 新增資訊合法性契約：每欄 source＋pit_note（七時戳為設計，見 [[fw-temporal|時間層]]）。
+- **world_hypothesis** ← [[fw-world-signal|世界訊號]]（薄縱切代多為空）。
+- **research_claim／evaluation_contract** ← [[fw-research-bilingual|strategy-dev 預註冊契約]]（主張型別、基準、否證集合）。
 - **validity_domain** ← AARO contract（市場、期間、宇宙）。
 - **lineage** ← Ladder／LCEI／generation_log（父代、MOVE、生成器版本）。
 
 ## 誠實邊界（不得省略）
 
-- **有些真過濾表達不了**：現行月營收策略原本還有「非 ETF／上市滿一年／非全額交割」三個過濾，這三欄不在特徵代數 FIELDS 詞彙內，本版**無法表達**——`example_spec()` 誠實記在 `data_contract.gaps`，不硬塞、不虛構。這是 [語言編譯閘](method-gates.md)的能力邊界，不是 bug。
-- **pit_note 只是字串**：資料的可知時間目前靠人寫的 `pit_note` 字串宣告，機器尚未逐欄驗證七時戳（event/published/available/ingested/revised/source_version/entity_mapping_version）——這是 twdata 自建資料線的活，缺的欄由 [資訊合法性閘](method-gates.md)標 blocked。
-- **成本不在編譯層**：`compile_positions` 只到部位編譯，不算績效；成本、滑價、淨值走 [部署同形閘](method-gates.md)的 NAV 引擎（`run_ab`），成本是換手比例一次性扣減的**向量化近似**，非逐筆撮合。
-- **停牌以陳價出場**：[實驗 000](exp-000-engine-first-run.md) 中持有期停牌以陳價出場共 19 檔次（占比不到 0.5%，已誠實計數）。
+- **有些真過濾表達不了**：現行月營收策略原本還有「非 ETF／上市滿一年／非全額交割」三個過濾，這三欄不在特徵代數 FIELDS 詞彙內，本版**無法表達**——`example_spec()` 誠實記在 `data_contract.gaps`，不硬塞、不虛構。這是 [[method-gates|語言編譯閘]]的能力邊界，不是 bug。
+- **pit_note 只是字串**：資料的可知時間目前靠人寫的 `pit_note` 字串宣告，機器尚未逐欄驗證七時戳（event/published/available/ingested/revised/source_version/entity_mapping_version）——這是 twdata 自建資料線的活，缺的欄由 [[method-gates|資訊合法性閘]]標 blocked。
+- **成本不在編譯層**：`compile_positions` 只到部位編譯，不算績效；成本、滑價、淨值走 [[method-gates|部署同形閘]]的 NAV 引擎（`run_ab`），成本是換手比例一次性扣減的**向量化近似**，非逐筆撮合。
+- **停牌以陳價出場**：[[exp-000-engine-first-run|實驗 000]] 中持有期停牌以陳價出場共 19 檔次（占比不到 0.5%，已誠實計數）。
 - **Weight 只有等權**：`WEIGHT_SCHEMES = ('equal',)`，市值權重等其他配權尚未進詞彙。
 
-下一步：組出來的部位要過哪十道關卡才准算數，見 [方法：證據閘（十道關卡）](method-gates.md)；引擎怎麼自己提案下一個 spec，見 [方法：進化迴圈（圖提案→變異→裁決→回流）](method-evolution-loop.md)。
-
----
-
-**被連結自（反向連結）：** [實驗 000：引擎首輪 A/B 退出時點](exp-000-engine-first-run.md) · [實驗 001：生成候選 C（月營收 × 價格強勢）](exp-001-candidate-c.md) · [方法：策略基因（StrategySpec 九部件）](method-strategy-spec.md) · [方法：進化迴圈（圖提案→變異→裁決→回流）](method-evolution-loop.md) · [首頁：Alpha 進化迴圈研究 Wiki](index.md)
+下一步：組出來的部位要過哪十道關卡才准算數，見 [[method-gates]]；引擎怎麼自己提案下一個 spec，見 [[method-evolution-loop]]。

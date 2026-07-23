@@ -1,6 +1,10 @@
-# 實驗 004：世界信念契約首度到期對帳
+---
+title: 實驗 004：世界信念契約首度到期對帳
+group: 實驗
+exp: 004
+---
 
-前三輪實驗都在做同一類事：生策略、回測、拆穿它是不是動能 beta（[000](exp-000-engine-first-run.md)～[003](exp-003-graph-evolution.md)）。這一輪換一條線——**第一次不評策略、而評「信念」**。它把 [MIEE](fw-qual-engine.md) 兩條事件驅動假說編成 append-only 的世界信念版本，讀真實的到期結算數，純碼把信心從先驗 0.5 更新到證據下界，並判一個 `update_action`。結果是本專案第一次**一條信念被真證據推翻**：B-H-003 因 86 筆對帳只命中 27 筆（31.40%），信心 0.5 → 0.2256，判 `REFUTE`；作為對照，同機制、主窗較長的 B-H-001 被 636 筆削弱但存活（`WEAKEN`，0.5 → 0.3913）。這一頁是[三迴圈](three-loops.md)裡**認知迴圈**的第一個真跑實例。
+前三輪實驗都在做同一類事：生策略、回測、拆穿它是不是動能 beta（[[exp-000-engine-first-run|000]]～[[exp-003-graph-evolution|003]]）。這一輪換一條線——**第一次不評策略、而評「信念」**。它把 [[fw-qual-engine|MIEE]] 兩條事件驅動假說編成 append-only 的世界信念版本，讀真實的到期結算數，純碼把信心從先驗 0.5 更新到證據下界，並判一個 `update_action`。結果是本專案第一次**一條信念被真證據推翻**：B-H-003 因 86 筆對帳只命中 27 筆（31.40%），信心 0.5 → 0.2256，判 `REFUTE`；作為對照，同機制、主窗較長的 B-H-001 被 636 筆削弱但存活（`WEAKEN`，0.5 → 0.3913）。這一頁是[[three-loops|三迴圈]]裡**認知迴圈**的第一個真跑實例。
 
 > 資料截止 2026-07-22｜信念 v1 註冊 2026-07-17、v2 對帳 2026-07-17～19｜證據源＝MIEE `prediction_outcome`（唯讀）｜裁決 REFUTE / WEAKEN（純碼）｜真相源＝`aaro/wm/belief.py`＋`data/aaro.sqlite` `belief_contract` 表
 
@@ -16,7 +20,7 @@
 
 | 部件／機件 | 這輪的內容 | 來源檔案 |
 |---|---|---|
-| 信念契約 schema | 14 欄 append-only 信念表＋兩個防改防刪觸發器 | `wm/belief.py` `SCHEMA_SQL`（詳見 [信念契約](world-belief-contract.md)） |
+| 信念契約 schema | 14 欄 append-only 信念表＋兩個防改防刪觸發器 | `wm/belief.py` `SCHEMA_SQL`（詳見 [[world-belief-contract|信念契約]]） |
 | MIEE 讀取（唯讀） | `hypothesis` 讀機制/範圍/否證；`prediction_outcome` 讀真實 hit/excess | `wm/belief.py` `connect_miee_ro()`（`?mode=ro` 結構性擋寫） |
 | Wilson 下界結算器 | 由命中數 k/n 算方向命中率 95% 區間，`confidence_after`＝下界 | `wm/belief.py` `wilson_interval()`／`settle()`（純函式、無隨機） |
 | 純碼決策樹 | 由 (n, k, avg_excess, wilson_lo/hi) 判五態動作，LLM 零涉入 | `wm/belief.py` `decide_action()` |
@@ -111,11 +115,7 @@ hit_rate ≤ 0.5   或  avg_excess ≤ 0 → WEAKEN       任一否證跡象 →
 - **`confidence_before` 是明說的先驗 0.5，不是從資料推導**。只有 `confidence_after` 純碼算。先驗選 0.5（方向擲硬幣基準）是設計選擇；換先驗、信心軌跡就不同。
 - **`n` 是跨時窗匯總、非只主窗**：`fetch_reconciled()` 把該假說在各 horizon（[5,10,20,60]）的 outcome 全匯總成一個命中率。這是一個**該被攻擊的口徑**——把不同時窗的命中混池成單一 hit_rate，並不乾淨。這也是為什麼 B-H-001 在信念契約判 `WEAKEN`（n=636 匯總），而 MIEE 自身 `status` 標 `insufficient`（其主窗口徑樣本不足）——兩套系統用不同結算口徑，B-H-003 的 REFUTE 才與 MIEE `refuted` 對得上。這條不一致必須明講，不能只報對得上的那條。
 - **信心＝命中率 Wilson 下界，對「賺賠幅度」不敏感**：結算器只讓 `avg_excess` 透過否證子句（正負）進來，沒把超額的**大小**放進信心。一條命中率低但每次命中賺很大的信念，會被這個口徑低估。換結算器（如超額 t 值）結論可能不同。
-- **MIEE 假說不是完整世界機制信念**：它是事件驅動（漲價後短窗）的可證偽預測，是目前**唯一**有真到期結算數的真資料，才拿它當第一條信念的證據；它**不等於**「升息壓估值」那種常駐世界模型節點。信念契約的殼對了，內容還停在事件層——與 [世界模型](world-model.md) 空殼互為因果。
+- **MIEE 假說不是完整世界機制信念**：它是事件驅動（漲價後短窗）的可證偽預測，是目前**唯一**有真到期結算數的真資料，才拿它當第一條信念的證據；它**不等於**「升息壓估值」那種常駐世界模型節點。信念契約的殼對了，內容還停在事件層——與 [[world-model|世界模型]] 空殼互為因果。
 - **兩條信念、單一對帳時點，不是統計勢力**：這是「機制能不能跑通」的首例，不是「這套結算在多條信念、多次對帳上都穩」的證明。要看它在更多信念、跨時間重複對帳的表現，才談得上信心。
 
-延伸：這 14 欄 schema 與 W/O/B/P 四層分開的完整論證見 [信念契約](world-belief-contract.md)；這一輪屬於三迴圈裡的認知迴圈、為何認知裁判不能用決策裸績效見 [三迴圈](three-loops.md)；決策迴圈的動能 beta 捷徑直接證據見 [實驗 002](exp-002-ablation.md)；把提問抬到世界未知層見 [假說引擎](hypothesis-engine.md)；四輪策略實驗的血統見 [實驗索引](exp-index.md)；最該被攻擊的接縫收在 [給 LLM 評審](for-llm-review.md)。
-
----
-
-**被連結自（反向連結）：** [三個迴圈：認知、決策、元研究，各有各的裁判](three-loops.md) · [世界信念契約：被更新的是信念，不是世界](world-belief-contract.md) · [世界模型：世界不是新聞，新聞是世界狀態的 delta](world-model.md) · [假說引擎：研究問題從冠軍的殘差長出來](hypothesis-engine.md) · [實驗 002：交互超邊消融](exp-002-ablation.md) · [實驗 005：king2 冠軍—挑戰者五臂預註冊（REGISTERED，零臂已跑）](exp-005-king2-prereg.md) · [實驗 007：king2 殘差第一條世界假說——落選股的產業需求殘差](exp-007-residual-belief.md) · [實驗索引：每一輪真跑，逐環節攤開](exp-index.md) · [演化的目標：一個目標函數量不了三種東西](objective.md) · [現任冠軍制度：凍結 king2，讓所有研究繞著真決策轉](champion-challenger.md) · [研究迴圈：W/O/B/P 分離，主線繞著現任冠軍轉](research-loop.md) · [給 LLM 評審：請攻擊這些接縫](for-llm-review.md) · [首頁：Alpha 進化迴圈研究 Wiki](index.md)
+延伸：這 14 欄 schema 與 W/O/B/P 四層分開的完整論證見 [[world-belief-contract|信念契約]]；這一輪屬於三迴圈裡的認知迴圈、為何認知裁判不能用決策裸績效見 [[three-loops|三迴圈]]；決策迴圈的動能 beta 捷徑直接證據見 [[exp-002-ablation|實驗 002]]；把提問抬到世界未知層見 [[hypothesis-engine|假說引擎]]；四輪策略實驗的血統見 [[exp-index|實驗索引]]；最該被攻擊的接縫收在 [[for-llm-review|給 LLM 評審]]。

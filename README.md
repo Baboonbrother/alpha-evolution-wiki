@@ -2,9 +2,25 @@
 
 > 以世界模型為主軸的 Research OS：現任冠軍（凍結 king2）→ 決策殘差 → 世界假說 → 信念契約 → 樣本外對決 → 晉升；載具路由器（股票/CB/CBAS＝報酬形狀）。每次實驗（000–007）逐環節透明。exp-007＝第一條從冠軍殘差長出的世界假說 B-RES-001，裁決 NARROW_SCOPE（誠實：未確認也未否證，C 臂維持 blocked）。
 
-**冠軍制度**：[champion-challenger.md](champion-challenger.md)　·　**演化目標**：[objective.md](objective.md)　·　**單檔全文**：[alpha-wiki-bundle.md](alpha-wiki-bundle.md)　·　**給 LLM 評審**：[for-llm-review.md](for-llm-review.md)
+**冠軍制度**：[champion-challenger.md](champion-challenger.md)　·　**自主研究**：[autonomous-research.md](autonomous-research.md)　·　**演化目標**：[objective.md](objective.md)　·　**單檔全文**：[alpha-wiki-bundle.md](alpha-wiki-bundle.md)　·　**給 LLM 評審**：[for-llm-review.md](for-llm-review.md)
 
 績效數字均為未經樣本外驗證的暫定結果，非投資建議。
+
+---
+
+## 最新進展（2026-07-23）：讓「第二套」自己轉，先立兩塊防作弊地基
+
+批評指出：這台引擎已經會「自動判卷」（預註冊、純碼結算、負結果入帳），但還不會「自己出題」——[exp-007](exp-007-residual-belief.md) 的選題與機制全是人做的。這一輪把選題接進 agent 閉環，並先立兩塊自主搜尋必須的地基，全部真跑、附考卷：
+
+- **不可偷看的資料金庫**（`wm/vault.py`）：樣本外分段釘進 append-only 狀態機，只有 `SEALED` 段可授 confirmed。修掉了一個真實錯誤——exp-007 頁初版把 2025+ 金庫的結果印上頁面（破封），現已標 `EXPOSED`；唯一乾淨的 `SEALED` 段是未來累積的 `LIVE_FORWARD`。
+- **全域搜尋帳**（`wm/search_ledger.py`）：Bonferroni 把「測越多、門檻越高」接進結算，擋「連測一百次挑幸運者」。
+- **無人選題迴圈第一次真跑三輪**（`wm/autonomous_round.py`）：純碼選題／去重／資料判定／評分／組特徵／預註冊／結算／決定下一題，只有生機制交 9b；三輪都自轉完成、都誠實判 `HOLD_PRIOR`。**這是知識成功（迴圈能自轉），不是 Alpha 成功。** 詳見 [autonomous-research.md](autonomous-research.md)。
+
+系統現況快照（由 `wm/state_projector.py` 從真相帳投影，非手寫）：
+
+> - 編號實驗 **8 個**（000–007）；信念契約 **6 條**＝策展 3＋自主示範 3；從冠軍殘差長出的世界假說 **1 條**（B-RES-001，NARROW_SCOPE）
+> - 已 confirmed：**0 條**（C 臂維持 blocked，唯一合法確認源＝未來累積的 LIVE_FORWARD 金庫）
+> - 自主搜尋輪 **4 輪**（無人選題自主 **3 輪**，示範迴圈自轉，結算在 EXPOSED 段故不可 confirmed）
 
 ---
 
@@ -28,7 +44,7 @@ flowchart TB
     IDX["index 本頁：內容地圖"]
     subgraph MAIN["主線＝冠軍挑戰環（第三輪）"]
       direction LR
-      M1["凍結冠軍<br/>king2 ✅"] --> M2["決策殘差<br/>四格 5,409 列 ✅"] --> M3["世界假說<br/>❌ 零條"] --> M4["預註冊<br/>exp-005 ✅"] --> M5["挑戰者→對決→晉升<br/>❌ 零臂已跑"]
+      M1["凍結冠軍<br/>king2 ✅"] --> M2["決策殘差<br/>四格 5,409 列 ✅"] --> M3["世界假說<br/>B-RES-001 ✅<br/>但 NARROW_SCOPE 未 confirmed"] --> M4["預註冊<br/>exp-005/007 ✅"] --> M5["挑戰者→對決→晉升<br/>❌ C 臂 blocked（零 confirmed）"]
       M5 -.->|"晉升＝追加新列"| M1
     end
     subgraph ROS["Research OS 主軸"]
@@ -91,6 +107,7 @@ flowchart TB
 - [因果層：新聞→事件→供需→公司→財報→預期→價格](causal-layer.md) — 因果與供應鏈傳導；誠實面對 edges 0 筆、供應鏈一階。
 - [研究迴圈：W/O/B/P 分離，主線繞著現任冠軍轉](research-loop.md) — **主線全圖**：W/O/B/P 骨架 × 冠軍挑戰環（殘差→假說→挑戰者→對決→晉升）。
 - [假說引擎：研究問題從冠軍的殘差長出來](hypothesis-engine.md) — 假說引擎第三版：**選題殘差優先**（殘差天然帶決策相關性），ResearchValue 退為殘差外補充。
+- [自主研究：無人選題迴圈與兩件防作弊基礎](autonomous-research.md) — **最新**：不可偷看金庫＋全域搜尋帳＋無人選題迴圈第一次真跑三輪（知識成功、非 Alpha 成功）。
 
 ### 入口
 - [總覽：真正該演化的不是策略，是世界模型](overview.md) — 敘事總覽：從「拒絕相信自己」到「演化世界模型」到「繞著冠軍轉」。
@@ -126,6 +143,8 @@ flowchart TB
 - [實驗 003：圖驅動自主進化三代](exp-003-graph-evolution.md) — 圖驅動三代：機件會轉，放手就滑進動能。
 - [實驗 004：世界信念契約首度到期對帳](exp-004-belief-contract.md) — **機件驗證支線**：settle 機件 fail-closed 真跑（B-H-003 REFUTE 0.5→0.2256、B-H-001 WEAKEN 0.5→0.3913）；信念內容不在冠軍決策鏈上。
 - [實驗 005：king2 冠軍—挑戰者五臂預註冊（REGISTERED，零臂已跑）](exp-005-king2-prereg.md) — **冠軍軌第一份預註冊**：五臂＋晉升五道門判準凍結、C 臂 blocked（零 confirmed）、機件考卷 12/12；**REGISTERED，零臂已跑**。
+- [實驗 006：CB 載具路由（構想級）](exp-006-cb-router-prereg.md) — **載具軌**：四臂設計＋第一工項（歷史賣回價）實質達成——推翻「3/86」，賣回價實為 956 檔 2009→2026，債底時序現可算。
+- [實驗 007：殘差長出第一條世界假說 B-RES-001](exp-007-residual-belief.md) — **認知軌**：第一條從冠軍殘差長出的世界假說，裁決 NARROW_SCOPE（方向對但不顯著，未確認也未否證）；含金庫污染的公開更正。
 
 ### 方法論（誠實與審查）
 - [方法論：誠實紀律（拒絕相信自己）](discipline.md) — 誠實紀律：provisional 封頂、負結果入帳、薄縱切、architecture-first 警告。
@@ -134,6 +153,6 @@ flowchart TB
 
 ## 一句話總綱
 
-> **主線＝冠軍挑戰環：凍結冠軍 → 決策殘差 → 世界假說 → 預註冊 → 挑戰者 → 樣本外對決 → 晉升（追加新列，冠軍永不覆寫）。** 研究問題從冠軍殘差四格長出——每一列殘差都是一筆真的虧掉或漏掉的錢，決策相關性不必自估。目前環上真的完成的是凍結（`champion_registry` id=2、sha256 釘死）、殘差（100 事件 5,409 列、四類計數）與預註冊（exp-005 REGISTERED）；**假說零條、confirmed 信念零條、零臂已跑、零對決、零晉升**。
+> **主線＝冠軍挑戰環：凍結冠軍 → 決策殘差 → 世界假說 → 預註冊 → 挑戰者 → 樣本外對決 → 晉升（追加新列，冠軍永不覆寫）。** 研究問題從冠軍殘差四格長出——每一列殘差都是一筆真的虧掉或漏掉的錢，決策相關性不必自估。環上完成到哪、還缺哪一段，一律以頂部「現況快照」（從真相帳投影）為準：已有第一條從殘差長出的世界假說（B-RES-001），但它 NARROW_SCOPE、未 confirmed，挑戰者 C 臂因此維持 blocked，零對決、零晉升。
 
 目前這台引擎最誠實的狀態，分三態說完：**機件會轉、帳務可信、能自我否證**（策略軌四刀＋settle 機件 fail-closed 真跑）；**主線地基已釘死但環的中段整段是空的**（殘差→假說→confirmed→對決全未發生）；**世界模型閉環其餘層多為空殼**（因果 edges 0 筆、新聞史 15 天、`temporal_edge` 未建、walk-forward 未跑）。所有策略裁決封頂 E2、真錢一律不動、冠軍是研究帳鏡像而真錢線唯讀。細節見 [現任冠軍制度：凍結 king2，讓所有研究繞著真決策轉](champion-challenger.md)、[研究迴圈：W/O/B/P 分離，主線繞著現任冠軍轉](research-loop.md)、[實驗 005：king2 冠軍—挑戰者五臂預註冊（REGISTERED，零臂已跑）](exp-005-king2-prereg.md)、[方法論：誠實紀律（拒絕相信自己）](discipline.md) 與 [給 LLM 評審：請攻擊這些接縫](for-llm-review.md)。

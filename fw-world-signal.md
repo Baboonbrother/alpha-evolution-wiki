@@ -1,6 +1,11 @@
+---
+title: 框架：世界訊號
+group: 量化語言
+---
+
 # 世界訊號：把「世界判斷」變成可組合、可反證的地址
 
-**世界訊號（World Signal）**是[五層量化語言](lang-quant.md)的第二層。[特徵代數](fw-feature-algebra.md)把「數學轉換」做成可組合可驗證的語言；世界訊號再往上一階，把**世界事件、經濟機制、公司位置、財務傳導、市場預期、反證條件**也做成同樣可組合、且**可反證**的語言。它要解決的是量化最難的一塊——「這家公司到底在什麼世界機制裡、市場定價到哪、什麼會證明我看錯了」。
+**世界訊號（World Signal）**是[[lang-quant|五層量化語言]]的第二層。[[fw-feature-algebra|特徵代數]]把「數學轉換」做成可組合可驗證的語言；世界訊號再往上一階，把**世界事件、經濟機制、公司位置、財務傳導、市場預期、反證條件**也做成同樣可組合、且**可反證**的語言。它要解決的是量化最難的一塊——「這家公司到底在什麼世界機制裡、市場定價到哪、什麼會證明我看錯了」。
 
 服務已上線：systemd 8986，入口 `tailscale /wsignal`，程式碼在 `FOR_AGENT/world-signal/`。
 
@@ -71,14 +76,14 @@ stateDiagram-v2
 
 ## 兩條硬規則：反證必填、PIT 靠時間結構
 
-沿 [特徵代數](fw-feature-algebra.md)／[AARO 同一信條](discipline.md)：**LLM 只投稿結構化 spec，判決純碼**。其中兩條規則是這一層的命脈：
+沿 [[fw-feature-algebra|特徵代數]]／[[discipline|AARO 同一信條]]：**LLM 只投稿結構化 spec，判決純碼**。其中兩條規則是這一層的命脈：
 
 1. **可反證是硬性要求**：每個訊號必附可觸發的反證條件 `{id, metric, op, threshold, hard}`，`op ∈ {<,>,<=,>=,==}`，至少一條 `hard=true`。無反證的訊號**直接被拒**。反證一旦觸發，狀態機自動轉 `STRUCTURE_WEAKENING`/`STRUCTURE_BROKEN`。這條規則的意義：一個不能被證明錯的世界判斷，在這套語言裡不成立。
 2. **PIT 靠時間結構**：`observation_time ≤ public_available_time ≤ signal_time`；`expected_start` 不早於 `public_available_time`（否則就是前視）。用未公開資料＝前視，擋。
 
 ## 兩層接在一起：世界層閘 + 技術層時機
 
-世界訊號決定「參不參與」，[特徵代數](fw-feature-algebra.md)（真股價）決定「時機」。`combine.py` 把兩者合成 `LargeMoveWorldState`：**世界態先閘**（拿不到就不參與），再看技術態給時機判斷。
+世界訊號決定「參不參與」，[[fw-feature-algebra|特徵代數]]（真股價）決定「時機」。`combine.py` 把兩者合成 `LargeMoveWorldState`：**世界態先閘**（拿不到就不參與），再看技術態給時機判斷。
 
 ```
 世界層（本專案）：世界衝擊確認 + 公司捕獲 + 有預期差 → 甜蜜點
@@ -91,17 +96,13 @@ stateDiagram-v2
 
 ## 這一層在真實驗裡怎麼被用
 
-- **[實驗 001](exp-001-candidate-c.md)（候選 C）**：候選 C「月營收 × 250 日價格強勢」贏過父代的機制，報告是**用世界訊號的兩態語言來讀**的——偏向 `CAPTURE_CONFIRMED_EXPECTATION_GAP`（預期差尚未耗盡：市場還沒把營收訊號完全定價、價格強勢是再評價仍在進行的確認），而不是 `CAPTURE_CONFIRMED_ALREADY_PRICED`（買在已定價高點）。唯一輸年 2023（AI 爆發年）則落在 `already_priced` 態——等強勢確認等於在缺口收斂後才進場。這示範了九態語言可以把「為什麼會贏、什麼時候例外」講成可解釋的機制，而不是黑箱。但報告也誠實標注：這是**方向性讀法、非因果定案**。
+- **[[exp-001-candidate-c|實驗 001]]（候選 C）**：候選 C「月營收 × 250 日價格強勢」贏過父代的機制，報告是**用世界訊號的兩態語言來讀**的——偏向 `CAPTURE_CONFIRMED_EXPECTATION_GAP`（預期差尚未耗盡：市場還沒把營收訊號完全定價、價格強勢是再評價仍在進行的確認），而不是 `CAPTURE_CONFIRMED_ALREADY_PRICED`（買在已定價高點）。唯一輸年 2023（AI 爆發年）則落在 `already_priced` 態——等強勢確認等於在缺口收斂後才進場。這示範了九態語言可以把「為什麼會贏、什麼時候例外」講成可解釋的機制，而不是黑箱。但報告也誠實標注：這是**方向性讀法、非因果定案**。
 
 ## 誠實邊界
 
 - **世界層數值是示意佔位**：案例庫（WS001–WS006）的世界層數值是示範 schema 與引擎用的**佔位資料**，不是即時抓取的真實世界資料，不得當投資依據。引擎本身（狀態機／影響比／預期差／反證／PIT）是真的、可驗證；股票代號真實、技術層用真股價。世界層**尚未接真資料源**。
 - **缺探索通道（真缺口）**：現行 `worldlang` 的 `"unknown"` 只是捕獲評分的一個因子值，**不是**方向裁決要求的探索通道。封閉詞彙只適用生產通道；新現象需要一個 `UNKNOWN_EVENT`／`UNKNOWN_MECHANISM` 型別＋原始證據保留＋聚類＋累積後提案擴充本體的通道——這一塊全機零實作，是本體鎖死（ontology lock-in）的真風險。開工世界訊號完整因果鏈（引擎 P1）前，必須先補這個設計。
 - **增量效度未證**：方向裁決明訂 P1 世界訊號的成功標準**不是**「至少一檔通過驗證閘」（那只證明系統會運作），而是「在一批正、負案例中，世界訊號相較簡單基準（只用價格/營收/產業）具有可量化的增量判別力」——目前這個增量為零、待證。
-- **mcm 機制詞彙未對映**：世界訊號的 `M_*` 與新聞管線 mcm 的 `M_*` 不同源不同名（只有 `M_MARGIN_EXPANSION` 同名），擴圖前要先建對映表，見 [質化引擎](fw-qual-engine.md)。
+- **mcm 機制詞彙未對映**：世界訊號的 `M_*` 與新聞管線 mcm 的 `M_*` 不同源不同名（只有 `M_MARGIN_EXPANSION` 同名），擴圖前要先建對映表，見 [[fw-qual-engine|質化引擎]]。
 
-延伸閱讀：世界訊號的九態與[持有期](fw-holding-lifecycle.md)的 Alpha 生命週期六階疑似同構（都在描述定價生命週期，尺度不同）——這條線索見 [持有期生命週期](fw-holding-lifecycle.md)。時間欄位 τ 的完整升級見 [時間層](fw-temporal.md)。
-
----
-
-**被連結自（反向連結）：** [世界信念契約：被更新的是信念，不是世界](world-belief-contract.md) · [世界模型：世界不是新聞，新聞是世界狀態的 delta](world-model.md) · [因果層：新聞→事件→供需→公司→財報→預期→價格](causal-layer.md) · [實驗 001：生成候選 C（月營收 × 價格強勢）](exp-001-candidate-c.md) · [整體架構與資料流](architecture.md) · [方法：策略基因（StrategySpec 九部件）](method-strategy-spec.md) · [方法：部件從哪取用、怎麼啟用](method-components.md) · [框架：持有期生命週期](fw-holding-lifecycle.md) · [框架：時間層（時態邏輯節點）](fw-temporal.md) · [框架：特徵代數](fw-feature-algebra.md) · [框架：研究雙語與認知編譯器](fw-research-bilingual.md) · [框架：質化引擎（新聞→世界模型→特徵→Alpha工廠）](fw-qual-engine.md) · [給 LLM 評審：請攻擊這些接縫](for-llm-review.md) · [總覽：真正該演化的不是策略，是世界模型](overview.md) · [詞彙表](glossary.md) · [質化結構組成語言（總覽）](lang-qual.md) · [量化結構組成語言（總覽）](lang-quant.md) · [首頁：Alpha 進化迴圈研究 Wiki](index.md)
+延伸閱讀：世界訊號的九態與[[fw-holding-lifecycle|持有期]]的 Alpha 生命週期六階疑似同構（都在描述定價生命週期，尺度不同）——這條線索見 [[fw-holding-lifecycle|持有期生命週期]]。時間欄位 τ 的完整升級見 [[fw-temporal|時間層]]。
