@@ -36,6 +36,8 @@ group: 方法論
 
 它是**可推進的資料取得專案**：偵察→授權→PIT 驗證→實體歸戶→入庫。世界鏈現在接到「產業營收世界狀態」（真 finlab），下一跳的前置是把上表的 UNKNOWN 變成明確狀態。
 
+**【已升級第一塊】資料源偵察器帳本層落地**（`wm/source_scout.py`，append-only＋latest-wins＋無證據列非法）：owner 點名「系統會探索特徵、還不會自主探索資料源」——偵察器是補這個缺口的迴路（圖譜缺口→搜源→評估 PIT/歷史/授權/成本→connector→特徵→檢驗→回寫）。第一個走完「偵察→評估→記錄」的源＝Polymarket（[[exp-009-expectation-layer|EXP-009 預備]]：三族群可行、191 檔含完整裁決規則、真 PIT 時戳；狀態 `SOURCE_BLOCKED_LOCAL`＝台灣 DNS 攔截、合規判斷歸 owner）；worklist 已種入其餘八源（IV/skew、Trends、AIS、夜光、招聘、流量、海關、信用隱含）。**迴路的自動化（自主搜源與評估）仍未做**。
+
 ## B2 只有「最終確認」必須等未來——研究不必停等
 
 **初版說「時間換不來」只對一半。** 對的部分：Alpha 的**最終 live confirmation** 只能等 LIVE_FORWARD 累積（歷史段全 EXPOSED，這是金庫紀律的代價與價值）。錯的部分：等待期間研究**不必停**，可以：
