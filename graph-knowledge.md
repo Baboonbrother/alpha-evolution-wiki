@@ -5,6 +5,8 @@ group: 圖與超圖
 
 # 知識圖譜：四張圖，全部是帳的投影
 
+> **【F01.1 狀態更新 2026-07-24】** 定義圖與證據圖已從設計落地為分表實體：`def_edge`（特徵怎麼算——uses_data/applies_transform/normalizes_by，60 邊，源自 FeatureSpec 宣告式規格）與 `evi_edge`（實驗量到什麼——帶 period/universe/metric/run_hash/data_snapshot_id 的 provisional 邊）。首批內容＝法人 11 特徵 × king2 score 分量重疊（見 [[exp-f01-king2-overlap|EXP-F01]]）。本頁下文的「僅設計」敘述屬歷史狀態。
+
 ## 為什麼需要圖：血統鏈不夠
 
 AARO（自治 Alpha 研究實驗室，本專案地基）的記憶已經是全機最強：append-only 帳＋已封閉前沿＋下一議程。但它的**關係結構只有 `generation_log.parent` 這條「單親字串鏈」**加少量鏡射回鏈，家族只是一個 `family_id` 字串標籤。這代表一整批問題**答不出來**：

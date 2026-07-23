@@ -1,0 +1,30 @@
+{
+ "exp": "EXP-F01.1",
+ "run_hash": "dd6c4d46eaacd28f",
+ "data_snapshot_id": "b93df56772ecc2c0",
+ "n_features": 11,
+ "labels": {
+  "inst_turn_5": "LOW_OBSERVED_OVERLAP",
+  "inst_turn_20": "LOW_OBSERVED_OVERLAP",
+  "inst_turn_60": "PARTIAL_OVERLAP",
+  "foreign_turn_20": "LOW_OBSERVED_OVERLAP",
+  "trust_turn_20": "LOW_OBSERVED_OVERLAP",
+  "inst_mcap_20": "LOW_OBSERVED_OVERLAP",
+  "inst_z": "LOW_OBSERVED_OVERLAP",
+  "trust_streak": "LOW_OBSERVED_OVERLAP",
+  "inst_accel": "LOW_OBSERVED_OVERLAP",
+  "consensus_20": "LOW_OBSERVED_OVERLAP",
+  "diverge_mom20": "LOW_OBSERVED_OVERLAP"
+ },
+ "thresholds": {
+  "skin": 0.5,
+  "partial": 0.3,
+  "nonlinear_r2": 0.25
+ },
+ "claim_scope": "KING2_SCORE_NODE 分量重疊（0.65rev+0.35tilt）——policy 級（股票池/品質閘/Top-12/月頻錨/提前退出/regime覆蓋）未入圖,不得宣稱 policy 重疊；LOW_OBSERVED_OVERLAP=目前口徑下未觀察到高度單調重疊,**非增量宣稱**",
+ "output_sha256_16": {
+  "exp_f01_1_result.json": "e5d704a7f2fd5875",
+  "overlap_matrix.csv": "378d39545e7e1a6f",
+  "graph_edges.csv": "92063258863f0f8a"
+ }
+}

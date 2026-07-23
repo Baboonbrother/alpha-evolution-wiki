@@ -1,0 +1,41 @@
+{
+ "source_repo": "本機 aaro 研究倉(非公開;真錢線唯讀分離)",
+ "module_sha256_16": {
+  "data_contract.py": "f278f77d89d7109b",
+  "king2_full.py": "341ff8d553221d93",
+  "inst_features.py": "50589daca611a9c7",
+  "feature_spec.py": "4d25fcd644b170d1",
+  "exp_f01.py": "adb5fe375f6e7862",
+  "exp_f01_1.py": "5d173b13ecc0e30a",
+  "tests_exp_f01.py": "4117fb38f4fe5d05",
+  "tests_f01_1.py": "b5abf4d5ed55363c"
+ },
+ "data_snapshot_id": "b93df56772ecc2c0",
+ "data_file_sha256_16": {
+  "institutional_investors_trading_summary#外陸資買賣超股數(不含外資自營商).feather": "bb923cc51a451707",
+  "institutional_investors_trading_summary#投信買賣超股數.feather": "520c59318d0e0248",
+  "institutional_investors_trading_summary#自營商買賣超股數(自行買賣).feather": "43ae13dc3befe8b6",
+  "price#收盤價.feather": "9a4a34f33d519d83",
+  "price#成交金額.feather": "ca0b7a2b1cf80e1c",
+  "price#成交股數.feather": "df29f30233ef2558",
+  "etl#market_value.feather": "7673e9978440aab9",
+  "etl#adj_close.feather": "49f762cb681b925f",
+  "etl#inventory#大於一千張佔比.feather": "d1ea0f7518d4e665",
+  "etl#inventory#小於十張佔比.feather": "8807c63b8ffdc59c",
+  "etl#inventory#小於五張佔比.feather": "896328ea8eda1f12",
+  "margin_transactions#融資今日餘額.feather": "0a6cacc43f529e4e",
+  "margin_transactions#融券今日餘額.feather": "82f1315e777ed3f8",
+  "monthly_revenue#當月營收.feather": "0cc1e13b3967689b"
+ },
+ "python": "3.12.3",
+ "pandas": "3.0.3",
+ "numpy": "2.4.6",
+ "commands": [
+  "python -m wm.data_contract",
+  "python -m wm.king2_full",
+  "python -m wm.exp_f01_1",
+  "python -m wm.tests_f01_1",
+  "python -m wm.tests_exp_f01"
+ ],
+ "note": "程式與FinLab資料不公開(授權/真錢鄰接);本manifest提供版本指認:哪版程式×哪版資料→哪個結果"
+}

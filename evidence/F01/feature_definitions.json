@@ -1,0 +1,243 @@
+{
+ "source_version": "finlab_db@daily_mirror",
+ "bases": {
+  "inst_net_amt": {
+   "desc": "三法人合計淨買超金額(股數×收盤)",
+   "available_at": "T+1 Open",
+   "datasets": [
+    "inst_foreign",
+    "inst_trust",
+    "inst_dealer",
+    "adj_close(價)"
+   ]
+  },
+  "foreign_net_amt": {
+   "desc": "外資淨買超金額",
+   "available_at": "T+1 Open",
+   "datasets": [
+    "inst_foreign"
+   ]
+  },
+  "trust_net_amt": {
+   "desc": "投信淨買超金額",
+   "available_at": "T+1 Open",
+   "datasets": [
+    "inst_trust"
+   ]
+  },
+  "trust_net_shares": {
+   "desc": "投信淨買超股數",
+   "available_at": "T+1 Open",
+   "datasets": [
+    "inst_trust"
+   ]
+  },
+  "dealer_net_amt": {
+   "desc": "自營淨買超金額",
+   "available_at": "T+1 Open",
+   "datasets": [
+    "inst_dealer"
+   ]
+  },
+  "turnover_amt": {
+   "desc": "成交金額",
+   "available_at": "T EOD",
+   "datasets": [
+    "turnover_amt"
+   ]
+  },
+  "market_value": {
+   "desc": "市值",
+   "available_at": "T EOD",
+   "datasets": [
+    "market_value"
+   ]
+  },
+  "close": {
+   "desc": "收盤價",
+   "available_at": "T EOD",
+   "datasets": [
+    "adj_close(價)"
+   ]
+  }
+ },
+ "specs": {
+  "inst_turn_5": {
+   "B": "inst_net_amt",
+   "W": 5,
+   "R": "cross_section",
+   "O": "continuous",
+   "X": [
+    [
+     "rolling_sum",
+     "W"
+    ],
+    [
+     "divide_by_rolling_sum",
+     "turnover_amt",
+     "W"
+    ]
+   ]
+  },
+  "inst_turn_20": {
+   "B": "inst_net_amt",
+   "W": 20,
+   "R": "cross_section",
+   "O": "continuous",
+   "X": [
+    [
+     "rolling_sum",
+     "W"
+    ],
+    [
+     "divide_by_rolling_sum",
+     "turnover_amt",
+     "W"
+    ]
+   ]
+  },
+  "inst_turn_60": {
+   "B": "inst_net_amt",
+   "W": 60,
+   "R": "cross_section",
+   "O": "continuous",
+   "X": [
+    [
+     "rolling_sum",
+     "W"
+    ],
+    [
+     "divide_by_rolling_sum",
+     "turnover_amt",
+     "W"
+    ]
+   ]
+  },
+  "foreign_turn_20": {
+   "B": "foreign_net_amt",
+   "W": 20,
+   "R": "cross_section",
+   "O": "continuous",
+   "X": [
+    [
+     "rolling_sum",
+     "W"
+    ],
+    [
+     "divide_by_rolling_sum",
+     "turnover_amt",
+     "W"
+    ]
+   ]
+  },
+  "trust_turn_20": {
+   "B": "trust_net_amt",
+   "W": 20,
+   "R": "cross_section",
+   "O": "continuous",
+   "X": [
+    [
+     "rolling_sum",
+     "W"
+    ],
+    [
+     "divide_by_rolling_sum",
+     "turnover_amt",
+     "W"
+    ]
+   ]
+  },
+  "inst_mcap_20": {
+   "B": "inst_net_amt",
+   "W": 20,
+   "R": "cross_section",
+   "O": "continuous",
+   "X": [
+    [
+     "rolling_sum",
+     "W"
+    ],
+    [
+     "divide_by_scaled",
+     "market_value",
+     1000.0
+    ]
+   ]
+  },
+  "inst_z": {
+   "B": "inst_net_amt",
+   "W": 20,
+   "R": "time_series_then_cs",
+   "O": "continuous",
+   "X": [
+    [
+     "divide_by",
+     "turnover_amt"
+    ],
+    [
+     "zscore",
+     252
+    ],
+    [
+     "rolling_mean",
+     "W"
+    ]
+   ]
+  },
+  "trust_streak": {
+   "B": "trust_net_shares",
+   "W": 20,
+   "R": "time_series",
+   "O": "signed_int",
+   "X": [
+    [
+     "sign_streak"
+    ],
+    [
+     "clip",
+     -20,
+     20
+    ]
+   ]
+  },
+  "inst_accel": {
+   "B": "inst_net_amt",
+   "W": 5,
+   "R": "cross_section",
+   "O": "continuous",
+   "X": [
+    [
+     "turn_ratio_diff",
+     5,
+     20
+    ]
+   ]
+  },
+  "consensus_20": {
+   "B": "inst_net_amt",
+   "W": 20,
+   "R": "cross_section",
+   "O": "bounded[-1,1]",
+   "X": [
+    [
+     "sign_consensus3",
+     20
+    ]
+   ]
+  },
+  "diverge_mom20": {
+   "B": "close",
+   "W": 20,
+   "R": "cross_section_rank_diff",
+   "O": "bounded[-1,1]",
+   "X": [
+    [
+     "rank_diff_mom_vs",
+     "inst_turn_20",
+     20
+    ]
+   ]
+  }
+ },
+ "pit_rule": "全特徵 shift(1)：日t決策只用≤t-1法人資料（DataContract: T+1 Open）"
+}

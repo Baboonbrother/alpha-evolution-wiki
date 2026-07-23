@@ -1,0 +1,25 @@
+=== F01.1 考卷（fail-closed）===
+  [PASS] 禁名落實：結果檔零 CANDIDATE_INCREMENTAL、evi rel=low_monotonic_overlap_with  — {'low_monotonic_overlap_with', 'measured_overlap_with'}
+  [PASS] 正負抵銷被抓：mean≈0 但 mean_abs 高、sign_consistency≈0.5  — mean=-0.002 abs=0.86 sign=0.5
+  [PASS] 分類附 SIGN_FLIP_OVERLAP 旗標  — ['SIGN_FLIP_OVERLAP']
+  [PASS] U 型換皮被抓：Spearman低但 OOF R² 高  — spearman=-0.019 oof_r2=0.9311
+  [PASS] 分類附 NONLINEAR_OVERLAP_SUSPECT 旗標  — ['NONLINEAR_OVERLAP_SUSPECT(rev_rank:0.9311)']
+  [PASS] def/evi 分表 append-only；evi 身分含 period/universe/metric/run_hash/snapshot
+  [PASS] 定義圖有實質內容（uses_data/applies_transform/normalizes_by ≥40 邊）  — 60
+  [PASS] F01 舊 qual_edge 遷移入帳 ≥11 且舊列保留（append-only）  — supersession=11 舊列=12
+  [PASS] 快照凍結：data_snapshot_id＋≥14 來源檔 sha＋run_hash
+  [PASS] claim_scope 明示 SCORE_NODE 非 POLICY、LOW_OBSERVED 非增量
+  [PASS] FeatureSpec 規格重算＝手寫實作（抽3特徵逐格零差）
+======================================================
+F01.1 考卷全綠 ✓（改名/抵銷/U型/分表/遷移/快照/降級/規格=實作）
+=== 主線縱切考卷（FinLab×king2,fail-closed）===
+  [PASS] DataContract 13 資料集入帳且集保契約含統計日≠可用日警示  — n=13
+  [PASS] 完整 king2 重算 vs parquet 逐格一致（排名位次容差,快照漂移已誠實記錄）  — checked=2500 tol=0.0005
+  [PASS] 法人特徵 PIT shift(1)：錨日值＝只用 ≤d-1 資料的手算值  — 0.045506 vs 0.045506 (006203@2022-01-10)
+  [PASS] F01 零前瞻報酬（無 fwd/excess/投組/負向shift 使用；特徵幾何,金庫無涉）  — []
+  [PASS] 分類門檻純碼（0.6→SKIN/0.35→PARTIAL/0.1→LOW_OBSERVED/size0.6→+SIZE_PROXY,改名後）
+  [PASS] 結果檔 11 特徵全分類且法人最大重疊多落在 chip（經濟合理）  — chip為最大重疊者:7/11
+  [PASS] 定義圖邊 ≥11 條入 qual_edge 且 evidence 非空 JSON 陣列（含實測 corrs）  — 邊數=12
+  [PASS] 四模組出生標注
+======================================================
+主線縱切考卷全綠 ✓（契約/完整king2對帳/法人PIT/零報酬/分類門檻/定義圖）
