@@ -1,0 +1,398 @@
+{
+ "exp_id": "EXP-F02",
+ "design": {
+  "min_train": 36,
+  "test_block": 12,
+  "embargo": 1,
+  "lam": 1.0,
+  "base_feats": [
+   "score",
+   "rev_rank",
+   "fp",
+   "chip",
+   "tilt",
+   "q_quality",
+   "adv_rank",
+   "pool_rank_pct",
+   "regime_weak"
+  ],
+  "inst_feats": [
+   "trust_streak",
+   "diverge_mom20",
+   "inst_accel",
+   "trust_turn_20",
+   "inst_turn_5",
+   "consensus_20",
+   "inst_z",
+   "foreign_turn_20",
+   "inst_turn_20",
+   "inst_mcap_20",
+   "inst_turn_60"
+  ],
+  "tasks": {
+   "T1_selected_crash": {
+    "sel": true,
+    "outcome": "excess",
+    "q": 0.1,
+    "side": "le",
+    "k": 2
+   },
+   "T2_missed_soar": {
+    "sel": false,
+    "outcome": "excess_vs_pool",
+    "q": 0.9,
+    "side": "ge",
+    "k": 5
+   }
+  },
+  "prereg_sha256_16": "872ebadf8d711837"
+ },
+ "results": {
+  "T1_selected_crash": {
+   "task": "T1_selected_crash",
+   "folds": [
+    {
+     "test_start": "2018-12-10",
+     "test_end": "2020-06-10",
+     "n_train": 420,
+     "n_test": 144,
+     "threshold": -0.0764,
+     "test_prevalence": 0.0764,
+     "base": {
+      "log_loss": 0.25713,
+      "pr_auc": 0.24061,
+      "prec_at_k": 0.16667
+     },
+     "base_inst": {
+      "log_loss": 0.26511,
+      "pr_auc": 0.17855,
+      "prec_at_k": 0.08333
+     },
+     "delta": {
+      "log_loss": 0.00798,
+      "pr_auc": -0.06206,
+      "prec_at_k": -0.08334
+     }
+    },
+    {
+     "test_start": "2020-07-10",
+     "test_end": "2021-12-10",
+     "n_train": 564,
+     "n_test": 144,
+     "threshold": -0.07572,
+     "test_prevalence": 0.1528,
+     "base": {
+      "log_loss": 0.44381,
+      "pr_auc": 0.33513,
+      "prec_at_k": 0.29167
+     },
+     "base_inst": {
+      "log_loss": 0.46903,
+      "pr_auc": 0.30831,
+      "prec_at_k": 0.29167
+     },
+     "delta": {
+      "log_loss": 0.02522,
+      "pr_auc": -0.02682,
+      "prec_at_k": 0.0
+     }
+    },
+    {
+     "test_start": "2022-01-10",
+     "test_end": "2023-05-10",
+     "n_train": 708,
+     "n_test": 144,
+     "threshold": -0.07919,
+     "test_prevalence": 0.1042,
+     "base": {
+      "log_loss": 0.37363,
+      "pr_auc": 0.15585,
+      "prec_at_k": 0.20833
+     },
+     "base_inst": {
+      "log_loss": 0.39775,
+      "pr_auc": 0.18335,
+      "prec_at_k": 0.25
+     },
+     "delta": {
+      "log_loss": 0.02412,
+      "pr_auc": 0.0275,
+      "prec_at_k": 0.04167
+     }
+    },
+    {
+     "test_start": "2023-07-10",
+     "test_end": "2024-10-11",
+     "n_train": 852,
+     "n_test": 144,
+     "threshold": -0.07954,
+     "test_prevalence": 0.1458,
+     "base": {
+      "log_loss": 0.43355,
+      "pr_auc": 0.20375,
+      "prec_at_k": 0.125
+     },
+     "base_inst": {
+      "log_loss": 0.44701,
+      "pr_auc": 0.18548,
+      "prec_at_k": 0.08333
+     },
+     "delta": {
+      "log_loss": 0.01346,
+      "pr_auc": -0.01827,
+      "prec_at_k": -0.04167
+     }
+    },
+    {
+     "test_start": "2024-12-10",
+     "test_end": "2026-02-10",
+     "n_train": 996,
+     "n_test": 144,
+     "threshold": -0.08467,
+     "test_prevalence": 0.1944,
+     "base": {
+      "log_loss": 0.53775,
+      "pr_auc": 0.2388,
+      "prec_at_k": 0.25
+     },
+     "base_inst": {
+      "log_loss": 0.52447,
+      "pr_auc": 0.30812,
+      "prec_at_k": 0.33333
+     },
+     "delta": {
+      "log_loss": -0.01328,
+      "pr_auc": 0.06932,
+      "prec_at_k": 0.08333
+     }
+    },
+    {
+     "test_start": "2026-03-10",
+     "test_end": "2026-06-10",
+     "n_train": 1140,
+     "n_test": 48,
+     "threshold": -0.09151,
+     "test_prevalence": 0.25,
+     "base": {
+      "log_loss": 0.63569,
+      "pr_auc": 0.30132,
+      "prec_at_k": 0.375
+     },
+     "base_inst": {
+      "log_loss": 0.64582,
+      "pr_auc": 0.29551,
+      "prec_at_k": 0.375
+     },
+     "delta": {
+      "log_loss": 0.01013,
+      "pr_auc": -0.00581,
+      "prec_at_k": 0.0
+     }
+    }
+   ],
+   "n_folds": 6,
+   "mean_delta_pr_auc": -0.00269,
+   "mean_delta_log_loss": 0.01127,
+   "mean_delta_prec_at_k": -0.0,
+   "n_folds_pr_auc_positive": 2,
+   "verdict": "NO_INCREMENTAL_EVIDENCE",
+   "segment_2017plus": {
+    "n_folds": 6,
+    "mean_delta_pr_auc": -0.00269
+   },
+   "yearly_delta_pr_auc_sign": {
+    "2018": "-",
+    "2020": "-",
+    "2022": "+",
+    "2023": "-",
+    "2024": "+",
+    "2026": "-"
+   }
+  },
+  "T2_missed_soar": {
+   "task": "T2_missed_soar",
+   "folds": [
+    {
+     "test_start": "2018-12-10",
+     "test_end": "2020-06-10",
+     "n_train": 1347,
+     "n_test": 379,
+     "threshold": 0.10717,
+     "test_prevalence": 0.1082,
+     "base": {
+      "log_loss": 0.34012,
+      "pr_auc": 0.2204,
+      "prec_at_k": 0.15
+     },
+     "base_inst": {
+      "log_loss": 0.33605,
+      "pr_auc": 0.23431,
+      "prec_at_k": 0.2
+     },
+     "delta": {
+      "log_loss": -0.00407,
+      "pr_auc": 0.01391,
+      "prec_at_k": 0.05
+     }
+    },
+    {
+     "test_start": "2020-07-10",
+     "test_end": "2021-12-10",
+     "n_train": 1729,
+     "n_test": 542,
+     "threshold": 0.10751,
+     "test_prevalence": 0.107,
+     "base": {
+      "log_loss": 0.32402,
+      "pr_auc": 0.17732,
+      "prec_at_k": 0.21667
+     },
+     "base_inst": {
+      "log_loss": 0.32741,
+      "pr_auc": 0.16309,
+      "prec_at_k": 0.21667
+     },
+     "delta": {
+      "log_loss": 0.00339,
+      "pr_auc": -0.01423,
+      "prec_at_k": 0.0
+     }
+    },
+    {
+     "test_start": "2022-01-10",
+     "test_end": "2023-05-10",
+     "n_train": 2261,
+     "n_test": 576,
+     "threshold": 0.10826,
+     "test_prevalence": 0.1059,
+     "base": {
+      "log_loss": 0.33456,
+      "pr_auc": 0.18033,
+      "prec_at_k": 0.25
+     },
+     "base_inst": {
+      "log_loss": 0.34311,
+      "pr_auc": 0.13905,
+      "prec_at_k": 0.16667
+     },
+     "delta": {
+      "log_loss": 0.00855,
+      "pr_auc": -0.04128,
+      "prec_at_k": -0.08333
+     }
+    },
+    {
+     "test_start": "2023-07-10",
+     "test_end": "2024-10-11",
+     "n_train": 2796,
+     "n_test": 589,
+     "threshold": 0.10814,
+     "test_prevalence": 0.1341,
+     "base": {
+      "log_loss": 0.41263,
+      "pr_auc": 0.16394,
+      "prec_at_k": 0.15
+     },
+     "base_inst": {
+      "log_loss": 0.41318,
+      "pr_auc": 0.15239,
+      "prec_at_k": 0.13333
+     },
+     "delta": {
+      "log_loss": 0.00055,
+      "pr_auc": -0.01155,
+      "prec_at_k": -0.01667
+     }
+    },
+    {
+     "test_start": "2024-12-10",
+     "test_end": "2026-02-10",
+     "n_train": 3418,
+     "n_test": 478,
+     "threshold": 0.11506,
+     "test_prevalence": 0.113,
+     "base": {
+      "log_loss": 0.33448,
+      "pr_auc": 0.20604,
+      "prec_at_k": 0.2
+     },
+     "base_inst": {
+      "log_loss": 0.33324,
+      "pr_auc": 0.19031,
+      "prec_at_k": 0.2
+     },
+     "delta": {
+      "log_loss": -0.00124,
+      "pr_auc": -0.01573,
+      "prec_at_k": 0.0
+     }
+    },
+    {
+     "test_start": "2026-03-10",
+     "test_end": "2026-06-10",
+     "n_train": 3894,
+     "n_test": 269,
+     "threshold": 0.11512,
+     "test_prevalence": 0.2082,
+     "base": {
+      "log_loss": 0.55614,
+      "pr_auc": 0.23717,
+      "prec_at_k": 0.25
+     },
+     "base_inst": {
+      "log_loss": 0.54769,
+      "pr_auc": 0.23608,
+      "prec_at_k": 0.2
+     },
+     "delta": {
+      "log_loss": -0.00845,
+      "pr_auc": -0.00109,
+      "prec_at_k": -0.05
+     }
+    }
+   ],
+   "n_folds": 6,
+   "mean_delta_pr_auc": -0.01166,
+   "mean_delta_log_loss": -0.00021,
+   "mean_delta_prec_at_k": -0.01667,
+   "n_folds_pr_auc_positive": 1,
+   "verdict": "NO_INCREMENTAL_EVIDENCE",
+   "segment_2017plus": {
+    "n_folds": 6,
+    "mean_delta_pr_auc": -0.01166
+   },
+   "yearly_delta_pr_auc_sign": {
+    "2018": "+",
+    "2020": "-",
+    "2022": "-",
+    "2023": "-",
+    "2024": "-",
+    "2026": "-"
+   }
+  }
+ },
+ "family": "KING2_RESIDUAL_DISCRIM",
+ "tests_burned": 2,
+ "data_snapshot": {
+  "data_snapshot_id": "b93df56772ecc2c0",
+  "files": {
+   "institutional_investors_trading_summary#外陸資買賣超股數(不含外資自營商).feather": "bb923cc51a451707",
+   "institutional_investors_trading_summary#投信買賣超股數.feather": "520c59318d0e0248",
+   "institutional_investors_trading_summary#自營商買賣超股數(自行買賣).feather": "43ae13dc3befe8b6",
+   "price#收盤價.feather": "9a4a34f33d519d83",
+   "price#成交金額.feather": "ca0b7a2b1cf80e1c",
+   "price#成交股數.feather": "df29f30233ef2558",
+   "etl#market_value.feather": "7673e9978440aab9",
+   "etl#adj_close.feather": "49f762cb681b925f",
+   "etl#inventory#大於一千張佔比.feather": "d1ea0f7518d4e665",
+   "etl#inventory#小於十張佔比.feather": "8807c63b8ffdc59c",
+   "etl#inventory#小於五張佔比.feather": "896328ea8eda1f12",
+   "margin_transactions#融資今日餘額.feather": "0a6cacc43f529e4e",
+   "margin_transactions#融券今日餘額.feather": "82f1315e777ed3f8",
+   "monthly_revenue#當月營收.feather": "0cc1e13b3967689b"
+  }
+ },
+ "run_hash": "508e35ee4f635991",
+ "deviations": [],
+ "claim_scope": "歷史EXPOSED資料walk-forward,結論最高PROVISIONAL;辨識king2 SCORE+POLICY產物的殘差(非policy重構);INCREMENTAL_RESIDUAL_INFORMATION≠可交易Alpha(F03成本後才配)"
+}

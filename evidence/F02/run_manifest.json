@@ -1,0 +1,32 @@
+{
+ "exp_id": "EXP-F02",
+ "run_hash": "508e35ee4f635991",
+ "data_snapshot_id": "b93df56772ecc2c0",
+ "prereg_sha256_16": "872ebadf8d711837",
+ "verdicts": {
+  "T1_selected_crash": "NO_INCREMENTAL_EVIDENCE",
+  "T2_missed_soar": "NO_INCREMENTAL_EVIDENCE"
+ },
+ "family": "KING2_RESIDUAL_DISCRIM",
+ "tests_burned": 2,
+ "modules_sha256_16": {
+  "exp_f02.py": "695685bca3f32103",
+  "tests_exp_f02.py": "0b8d962d802830b6",
+  "inst_features.py": "50589daca611a9c7",
+  "feature_spec.py": "4d25fcd644b170d1",
+  "king2_full.py": "341ff8d553221d93"
+ },
+ "data_sha256_16": {
+  "king2_residuals_dataset.parquet": "2a7ea63d560c23ed"
+ },
+ "environment": {
+  "python": "3.12.3",
+  "numpy": "2.4.6",
+  "pandas": "3.0.3"
+ },
+ "commands": [
+  "python -m wm.exp_f02",
+  "python -m wm.tests_exp_f02"
+ ],
+ "note": "程式與FinLab資料本體因授權/真錢鄰接不公開;本manifest提供版本指認(哪版程式×哪版資料→哪結果)"
+}

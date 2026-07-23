@@ -10,7 +10,7 @@
 
 ## 最新進展（2026-07-24）：主線改向——FinLab 特徵圖 × frozen king2 殘差
 
-owner 裁決：王牌不只是冠軍基準，**是整個探索空間的母體**。暫停 Polymarket／本地模型 operator／通用世界事件擴張，3-5 輪集中「FinLab × king2 殘差」。已完成：[EXP-F01/F01.1](exp-f01-king2-overlap.md)——完整 king2 重建為可計算節點（對凍結 parquet 逐格對帳）＋法人家族 11 個 FeatureSpec 化變化型特徵＋重疊圖（**10 LOW_OBSERVED_OVERLAP＋1 PARTIAL_OVERLAP＋0 換皮**，含符號一致率與非線性 OOF 檢定）＋定義圖/證據圖分表＋[可驗證證物包](evidence/F01/run_manifest.json)。**尚無任何新 Alpha 宣稱**——F02（殘差辨識）與 F03（五臂挑戰）才是增量檢定。
+owner 裁決：王牌不只是冠軍基準，**是整個探索空間的母體**。暫停 Polymarket／本地模型 operator／通用世界事件擴張，3-5 輪集中「FinLab × king2 殘差」。已完成：[EXP-F01/F01.1](exp-f01-king2-overlap.md)——完整 king2 重建為可計算節點（對凍結 parquet 逐格對帳）＋法人家族 11 個 FeatureSpec 化變化型特徵＋重疊圖（**10 LOW_OBSERVED_OVERLAP＋1 PARTIAL_OVERLAP＋0 換皮**，含符號一致率與非線性 OOF 檢定）＋定義圖/證據圖分表＋[可驗證證物包](evidence/F01/run_manifest.json)。**尚無任何新 Alpha 宣稱**。**F02 已跑完（誠實負結果）**：[EXP-F02](exp-f02-residual-discrimination.md)——把 11 個法人特徵加進完整 king2 base model，6 折 walk-forward（訓練窗門檻／embargo／grouped split，預註冊凍結）**雙任務 NO_INCREMENTAL_EVIDENCE**：base 本身有辨識力（PR-AUC ≈1.5–2× 盛行率），加法人特徵無樣本外增量（T1 log loss 5/6 折變差＝加入雜訊）；合成雙向測試證明機器有檢定力＝負結果是資料說的。**「低相關≠增量」從語義警告變成實驗事實**。[證物包](evidence/F02/run_manifest.json)。下一輪照 owner 排程走集保變化家族與法人×集保交互，法人單軸不進 F03。
 
 ## 前一階段（2026-07-23）：讓「第二套」自己轉，先立兩塊防作弊地基
 

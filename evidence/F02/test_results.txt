@@ -1,0 +1,15 @@
+=== F02 考卷（fail-closed）===
+  [PASS] 門檻＝訓練窗（含embargo）手算逐折一致；且逐折門檻各不相同  — distinct=12
+  [PASS] embargo 落實（至少一折 含/不含embargo 門檻不同,結果取含embargo）
+  [PASS] grouped split：折時間嚴格遞增、訓練窗（embargo後）全早於測試窗
+  [PASS] cls_* 全樣本分位標籤禁用（程式本體零 cls_ 引用）
+  [PASS] IRLS＝scipy 獨立最小化（同罰項NLL,係數差<1e-4）且重跑確定性  — maxdiff=7.09e-08
+  [PASS] avg_prec 手算小例
+  [PASS] 合成陽性：真增量訊號 → INCREMENTAL_RESIDUAL_INFORMATION  — ΔPR-AUC=+0.102 折+=5
+  [PASS] 合成陰性：純雜訊 inst → 非 INCREMENTAL  — ΔPR-AUC=+0.008 → MIXED_EVIDENCE
+  [PASS] evi_edge×2 誠實回寫（rel=裁決,PROVISIONAL,run_hash）＋家族帳 m≥2  — edges=2 m=2
+  [PASS] 圖候選由 evi_edge 查詢產生；刪一條邊 → 清單改變（Major 7 驗收）  — trust_streak 移除後 10
+  [PASS] 零 Sharpe/投組（原始碼掃描）  — []
+  [PASS] prereg 不可變（凍結sha=現檔實算）＋claim_scope 含 PROVISIONAL＋非Alpha＋零偏離
+======================================================
+F02 考卷全綠 ✓（門檻/embargo/split/禁cls/模型/檢定力/回寫/圖候選/prereg）
