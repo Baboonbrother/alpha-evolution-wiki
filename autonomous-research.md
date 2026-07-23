@@ -15,10 +15,10 @@ group: Research OS 主軸
 > - 編號實驗：**8 個**（000–007，每個都指回帳本證據）
 > - 信念契約：**6 條**＝策展 3＋自主示範 3；從冠軍殘差長出的世界假說 **1 條** → B-RES-001（NARROW_SCOPE，信心 0.445182）
 > - 已 confirmed（REINFORCE 過基準且來自 SEALED 段）：**0 條（C 臂維持 blocked）**
-> - 預註冊凍結：**17 份**（H-DEV2、EXP-005、AUTO-AR-1-C-normal-revH-chipL、AUTO-AR-2-C-normal-revM-chipL、AUTO-AR-3-C-normal-revL-chipL、OPEN-3fe5914572bb10d4、CONFIRM-bb482590fefecfe9、GRAPH-1ec53b3b9cf89dcf、GRAPH-21af02f1d9fdb6ee、EXP-007、GN2-66e7915251ddc51f、GN2-000f218c7bd3567a、GN2-07164ed6b26d6d89、GN2-8c7cff5da7e059bb、GN2-3e4f329d396af0bf、GN2-db1ce21c5ee6db42、GN2-44e152395ff9a7da）
+> - 預註冊凍結：**18 份**（H-DEV2、EXP-005、AUTO-AR-1-C-normal-revH-chipL、AUTO-AR-2-C-normal-revM-chipL、AUTO-AR-3-C-normal-revL-chipL、OPEN-3fe5914572bb10d4、CONFIRM-bb482590fefecfe9、GRAPH-1ec53b3b9cf89dcf、GRAPH-21af02f1d9fdb6ee、EXP-007、GN2-66e7915251ddc51f、GN2-000f218c7bd3567a、GN2-07164ed6b26d6d89、GN2-8c7cff5da7e059bb、GN2-3e4f329d396af0bf、GN2-db1ce21c5ee6db42、GN2-44e152395ff9a7da、WORLD-ALPHA-56f9e9c88f29254d）
 > - C 臂狀態：**blocked**（需一條 confirmed 信念才解鎖）
 > - 金庫可授 confirmed 的 SEALED 段：**1 個** → LIVE_FORWARD（SEALED，0 筆，未來事件累積中）
-> - 自主搜尋輪：**12 輪**（無人選題自主 **11 輪**，示範迴圈自轉，結算在 EXPOSED 段故不可 confirmed）
+> - 自主搜尋輪：**13 輪**（無人選題自主 **12 輪**，示範迴圈自轉，結算在 EXPOSED 段故不可 confirmed）
 <!--/STATE-->
 
 ## 為什麼先要這兩塊地基
@@ -119,7 +119,7 @@ flowchart TB
 | range_position_120（通道位置） | 0.046 (t=11) | +0.15 | **+0.81** | **MOMENTUM_BETA_CLOSED** |
 | short_reversal_5（短期反轉） | 0.001 (t=0.5) | −0.06 | −0.04 | NO_EDGE |
 
-兩個裁決最能說明這條線在做什麼：**range_position_120 對 king2 正交（相關僅 0.15）卻被擋下**——因為它對價格動能相關高達 0.81，就是 [[exp-002-ablation|exp-002]] 證過會滑進 beta 的已判死方向；「對 king2 正交」是必要非充分，還要不撞已知動能陷阱。**最強的真實發現＝low_vol_60（低波動異象）**：IC 0.071、對 king2 僅 −0.12、對動能僅 −0.04——對兩者都正交，是與 king2 營收動能真正不同的一條 Alpha 軸。
+兩個裁決最能說明這條線在做什麼：**range_position_120 對 king2 正交（相關僅 0.15）卻被擋下**——因為它對價格動能相關高達 0.81，就是 [[exp-002-ablation|exp-002]] 證過會滑進 beta 的已判死方向；「對 king2 正交」是必要非充分，還要不撞已知動能陷阱。**最強的真實發現＝low_vol_60（低波動異象）**：IC 0.071、對 king2 僅 −0.12、對動能僅 −0.04——對兩者都正交，是與 king2 營收動能真正不同的一條 Alpha 軸。（表中 t 為 naive 日頻 t——exp-008 稽核實錘重疊窗使 naive t 高估 3.5~4 倍，讀時打折；這批候選本就被成本閘擋下，結論不變。）
 
 這正是開放探索線該給的東西：它找到一個 king2 結構上抓不到、也不是換皮動能的候選家族。但**這是發現階段的旗標，不是可交易結論**——見誠實邊界。
 

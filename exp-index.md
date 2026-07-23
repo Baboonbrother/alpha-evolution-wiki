@@ -43,6 +43,7 @@ flowchart TB
 | 005 | 已確認世界信念加到凍結冠軍上，樣本外有超過安慰劑與獨立對照的增量（**預註冊，未驗證**） | 冠軍制度 [[champion-challenger]] ＋信念契約 [[world-belief-contract]] | **REGISTERED（零臂已跑）** | 冠軍凍結（sha256 釘死、永不覆寫）＋殘差四格落地＋五臂與晉升五道門判準凍結；C 臂 blocked（帳上零 confirmed 信念）；機件考卷 12/12 | [[exp-005-king2-prereg]] |
 | 006 | king2 選對公司但不確定發動時間時，CB 能否用較好的下行形狀保留 Alpha（載具路由第一實驗） | 載具路由器 [[instrument-router]] ＋CB 知識 [[cb-cbas]] | **構想級（判準未凍結、零臂已跑）** | 四臂設計成文（A 冠軍全股票／B 無腦 CB 替代／C 合格閘替代=主挑戰臂／D 風險預算配置）；**第一工項（歷史賣回價）實質達成**——推翻「3/86」，賣回價實為 956 檔 2009→2026，已建 `cb_putprice.sqlite`，C 臂「債底合格」現可算（caveat：折現率假設／PIT 2023-12 起） | [[exp-006-cb-router-prereg]] |
 | 007 | king2 落選股中，當時所屬產業月營收 YoY 中位（PIT）高者，持有窗殘差顯著為正（產業／世界需求衝擊是個股特質分數的漏項） | 冠軍殘差 [[champion-challenger]] ＋信念契約 [[world-belief-contract]] | **NARROW_SCOPE（E2）** | 第一條真正從冠軍決策殘差長出的世界假說 B-RES-001；HOLDOUT n=25 方向對（命中 0.64、平均超額 +0.715%/事件）但不顯著（t=0.73、CI [−1.19%,+2.60%] 含 0），confidence 0.5→0.445，既未確認也未否證——C 臂維持 blocked，下一閘獨立 walk-forward | [[exp-007-residual-belief]] |
+| 008 | 報酬的橫斷面資訊藏在**世界層**（產業營收狀態的水位/加速度/擴散度/陽明落後機制），非只在個股層 | 世界鏈 [[graph-native]] ＋確認閘機件 ＋搜尋帳 Bonferroni | **全 BLOCKED（誠實負結果）** | 第一次用世界模型找 Alpha：dev 四候選全強顯著（t=5.8~16.5，W_BREADTH 八年年年非負）→ prereg 凍結 → validation 全歸零、零挑戰者——**世界層訊號 regime 相依**（2022 升息後死掉）是本輪買到的真世界知識；W_LAGGARD（陽明機制）橫斷面均值反向＝個案敘事≠均值行為 | [[exp-008-world-alpha]] |
 
 ## 怎麼讀這張表
 

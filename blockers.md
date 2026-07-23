@@ -55,6 +55,8 @@ group: 方法論
 
 **初版說「單一產業湊不齊 2×2 是資料量問題」不準確——大半可靠統計設計解。** 已修第一步：新增 `continuous_interaction` form（事件內連續交互回歸，標準化 y~zA+zB+zA·zB 的交互係數逐事件收集再跨事件檢定）——不做中位切、不丟組內連續訊息。仍待做（owner 開的清單）：跨事件 pooling＋event fixed effect（把 n 從事件數升到列數，需 cluster SE）、產業階層模型／partial pooling（讓單一產業借力全體）、時序 lead-lag、保留事件結構的 permutation test。**B4 應列為「統計設計待改」，不是資料量的死路。**
 
+**測量層實錘（exp-008 稽核揪出、已修一半）**：日頻 IC 的 naive t 因 20 日重疊窗自相關（lag-1≈0.94）**系統性高估 3.5~4 倍**——曾造成 exp-008 兩個假 dev pass。已加 `harness.nw_tstat`（Newey-West）並在 world_alpha 的 dev/val 閘採用；歷史頁面的 naive t（如開放探索 low_vol t=15）讀時要打折。仍待做：整個評分器（`evaluate`/`judge`）換 NW 屬 evaluator_version 升版——**在那之前，任何用 naive t 的 dev 篩選都會系統性放行重疊灌水的候選**。
+
 ## B5 超邊函數形式仍少——純工程，可做
 
 form 從 2 種擴到 3 種（median_split／rank_product／continuous_interaction），但離「HyperedgeSpec → FeatureDSL → ExperimentSpec」的完整 FeatureDSL 還遠（門控、多軸、非線性）。接[[fw-feature-algebra|特徵代數]]的 DSL 是明確可執行的工程。
