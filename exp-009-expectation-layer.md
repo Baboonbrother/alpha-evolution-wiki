@@ -6,7 +6,7 @@ exp: "009"
 
 # 實驗 009（預備）：預測市場預期層——E_t[event] 不是 W_t
 
-**這一頁是預備階段記錄，不是實驗結果**：本輪只完成了實驗五步中的第 1 步（資料可行性）＋架構前置（資料源偵察器），**零報酬統計、零家族檢定燃燒**——這是刻意的：Alpha 檢定放在最後一步，前面每一步都可能把這條線誠實地砍掉。
+**進度**：第 1 步（可行性）✅＋第 2-3 步（語義映射＋領先性）已對**單一 Fed 事件**以端到端縱切打通（見下）——EXPECTATION_MARKET 家族第 1 測已燒、裁決 INCONCLUSIVE。Alpha 檢定仍在最後一步，前面每一步都可能把這條線誠實地砍掉。
 
 ## ⚠ 合規警示（放最前面）
 
@@ -61,13 +61,33 @@ flowchart LR
 2. **高量宏觀市場約 2024 起**：與 dev tier（2014-2021）完全不重疊——**既有的 dev/validation 切分對這個源不適用**，EXP-009 的 tier 設計要重新 prereg（2024-2025 當研究段？LIVE_FORWARD 當確認段？這是進第 2 步前必須凍結的決定）。
 3. **歷史 spread 不可得**（bid/ask 只在活市場）：流動性可信度修正對歷史段要用 volume/OI 代理，或從今天起前向累積。
 
+## 第 2-3 步（單事件）：端到端縱切已打通——實驗結果真的改變了下一輪缺口
+
+owner 指出研究順序錯誤：先蓋了大量進料口（103 筆 PROPOSED 觀察），輸送帶還沒接。修正＝先用**一個 Fed 事件**打通整條線（`wm/expectation_slice.py`，考卷 9/9）：
+
+```
+Observation → Evidence Fusion → Graph Update → Gap Detection
+→ HyperedgeSpec → ExperimentSpec → Result → Graph Writeback →（缺口改變）
+```
+
+真跑結果（market「Fed decreases interest rates by 50+ bps after January 2026 meeting?」，已結算 No）：
+
+1. **融合 SUPPORTED**：PROPOSED 觀察（schema 驗證、**不讀 model_id**——觀察可由本地模型/Claude Code/人工同格式產生）＋API 原生結算欄位（outcomePrices/UMA resolved）＋人工確認三源一致；`normalized`（deadline=2026-01、resolved=No）由**純碼**從逐字 span 解析——span 與 normalized 分欄。
+2. **真圖邊 5 條入 qual_edge**（治理表：evidence 必為非空 JSON 陣列）：市場→事件（prices_expectation_of）、事件→時間、結算觀察（corroborated/human）、傳導候選（PROPOSED 語意）、已測標記。
+3. **缺口偵測（前）**：`event:fomc-2026-01 = OPEN`。
+4. **可編譯超邊＋prereg**：spec_hash 凍結**先於任何報酬統計**；EXPECTATION_MARKET 家族第 1 測入搜尋帳（第一次動用 Polymarket 報酬統計）。
+5. **實驗（領先性，NW-t）**：n=88 個對齊日；Δlogit(Fed降息機率) → 次一台股交易日報酬 corr −0.155（t_nw −1.53）；反向 +0.032（t_nw +1.51）；同日 −0.049 → **INCONCLUSIVE(UNDERPOWERED)**——單一市場日頻樣本不夠，兩個方向都不顯著，誠實說不知道。
+6. **回寫＋缺口偵測（後）**：`OPEN → TESTED_AWAITING`——**實驗結果真的改變了下一輪圖缺口**（owner 的驗收判準；inconclusive 不封閉、等更多市場/資料）。
+
+這條縱切的意義：**輸送帶接通了**。接下來擴大不是「解析剩下 131 個市場」，而是沿同一條帶子送更多事件進實驗——而且每一步都模型獨立（考卷驗證縱切程式碼零 model_id 依賴）。
+
 ## 架構產出：資料源偵察器（比 Polymarket 本身更重要）
 
 owner 點名的真缺口：**系統會探索特徵，還不會自主探索資料源**。本輪落地偵察器的帳本層 `wm/source_scout.py`（`source_registry`，append-only＋latest-wins，無證據列即非法），Polymarket 是第一個走完「偵察→評估→記錄」的源；worklist 已種入其餘八個候選（選擇權 IV/skew、Google Trends、航運 AIS、衛星夜光、招聘、App/網站流量、海關進出口、信用隱含），全部 `SOURCE_UNKNOWN` 待偵察。**Polymarket 只是第一個示範，偵察器迴路（圖譜缺口→搜源→評估→connector→特徵→檢驗→回寫）的自動化是後續工作。**
 
 ## 誠實邊界（不得省略）
 
-- **本輪零報酬統計**：沒有任何 IC/Sharpe/報酬數字被計算——說「Polymarket 有 Alpha」的證據現在是**零**，只有「資料拿得到、語義保得住」。
+- **「Polymarket 有 Alpha」的證據仍是零**：唯一動用的報酬統計＝單事件領先性檢定，裁決 INCONCLUSIVE(UNDERPOWERED)——資料拿得到、語義保得住、輸送帶會轉，僅此而已。
 - **E_t ≠ W_t 的紀律尚未被檢定**：預期層進圖譜時必須與世界狀態層分開建模（預期變化／意外＝surprise 才是訊號候選），這是第 2 步語義映射的設計約束。
 - **合規判斷未決**（見頁首警示）：在 owner 拍板前，這個源停在 `SOURCE_BLOCKED_LOCAL`，不進任何自動排程。
 - **偵察量刻意低**（~15 請求）：三族群的市場覆蓋數字是搜尋詞抽樣、非完整枚舉。

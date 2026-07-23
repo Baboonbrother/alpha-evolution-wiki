@@ -15,10 +15,10 @@ group: Research OS 主軸
 > - 編號實驗：**8 個**（000–007，每個都指回帳本證據）
 > - 信念契約：**6 條**＝策展 3＋自主示範 3；從冠軍殘差長出的世界假說 **1 條** → B-RES-001（NARROW_SCOPE，信心 0.445182）
 > - 已 confirmed（REINFORCE 過基準且來自 SEALED 段）：**0 條（C 臂維持 blocked）**
-> - 預註冊凍結：**18 份**（H-DEV2、EXP-005、AUTO-AR-1-C-normal-revH-chipL、AUTO-AR-2-C-normal-revM-chipL、AUTO-AR-3-C-normal-revL-chipL、OPEN-3fe5914572bb10d4、CONFIRM-bb482590fefecfe9、GRAPH-1ec53b3b9cf89dcf、GRAPH-21af02f1d9fdb6ee、EXP-007、GN2-66e7915251ddc51f、GN2-000f218c7bd3567a、GN2-07164ed6b26d6d89、GN2-8c7cff5da7e059bb、GN2-3e4f329d396af0bf、GN2-db1ce21c5ee6db42、GN2-44e152395ff9a7da、WORLD-ALPHA-56f9e9c88f29254d）
+> - 預註冊凍結：**19 份**（H-DEV2、EXP-005、AUTO-AR-1-C-normal-revH-chipL、AUTO-AR-2-C-normal-revM-chipL、AUTO-AR-3-C-normal-revL-chipL、OPEN-3fe5914572bb10d4、CONFIRM-bb482590fefecfe9、GRAPH-1ec53b3b9cf89dcf、GRAPH-21af02f1d9fdb6ee、EXP-007、GN2-66e7915251ddc51f、GN2-000f218c7bd3567a、GN2-07164ed6b26d6d89、GN2-8c7cff5da7e059bb、GN2-3e4f329d396af0bf、GN2-db1ce21c5ee6db42、GN2-44e152395ff9a7da、WORLD-ALPHA-56f9e9c88f29254d、EXPSLICE-a9ed2c2747f3e6bd）
 > - C 臂狀態：**blocked**（需一條 confirmed 信念才解鎖）
 > - 金庫可授 confirmed 的 SEALED 段：**1 個** → LIVE_FORWARD（SEALED，0 筆，未來事件累積中）
-> - 自主搜尋輪：**13 輪**（無人選題自主 **12 輪**，示範迴圈自轉，結算在 EXPOSED 段故不可 confirmed）
+> - 自主搜尋輪：**14 輪**（無人選題自主 **12 輪**，示範迴圈自轉，結算在 EXPOSED 段故不可 confirmed）
 <!--/STATE-->
 
 ## 為什麼先要這兩塊地基
